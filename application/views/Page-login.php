@@ -63,13 +63,13 @@
             success: function(response){
                if(response== "success")
                 {
-                   
+					window.location = '<?php echo base_url(); ?>';
                    
                 }
                 else
                 {
                     //alert(response);
-                    $("#error").html('<div class="alert alert-danger alert-dismissible" role="alert"> <span class="fas fa-exclamation-triangle"></span> &nbsp; Login Gagal !</div>');
+                    $("#error").html('<div class="alert alert-danger alert-dismissible" role="alert"> <i class="fa fa-exclamation-triangle"></i> &nbsp; Login Error !</div>');
                 }
                
             } 
