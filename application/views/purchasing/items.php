@@ -1,4 +1,4 @@
-<title>Home</title>
+<title>Items</title>
 
 <?php include './application/views/header.php'; ?> 
 <body>
@@ -16,7 +16,7 @@
 				
 				<div class="navbar-btn navbar-btn-right">
 					
-					<a class="btn btn-success update-pro" href="auth/logout" title="Logout"><i class="fa fa-sign-out"></i></i> <span>LOGOUT</span></a>
+					<a class="btn btn-success update-pro" href="<?php echo base_url(); ?>auth/logout" title="Logout"><i class="fa fa-sign-out"></i></i> <span>LOGOUT</span></a>
 				</div>
 				<div id="navbar-menu">
 					<ul class="nav navbar-nav navbar-right">
@@ -42,11 +42,11 @@
 			<div class="sidebar-scroll">
 				<nav>
 					<ul class="nav">
-						<li><a href="index.html" class="active"><i class="lnr lnr-user"></i> <span>Users</span></a></li>
+						<li><a href="<?php echo base_url(); ?>purchasing" class=""><i class="lnr lnr-user"></i> <span>Supplier</span></a></li>
 						
-						<li><a href="tables.html" class=""><i class="lnr lnr-dice"></i> <span>Tables</span></a></li>
-						<li><a href="typography.html" class=""><i class="lnr lnr-text-format"></i> <span>Typography</span></a></li>
-						<li><a href="icons.html" class=""><i class="lnr lnr-linearicons"></i> <span>Icons</span></a></li>
+						<li><a href="tables.html" class="active"><i class="lnr lnr-dice"></i> <span>Items</span></a></li>
+						<li><a href="typography.html" class=""><i class="lnr lnr-text-format"></i> <span>Request</span></a></li>
+						<li><a href="icons.html" class=""><i class="lnr lnr-linearicons"></i> <span>Order</span></a></li>
 					</ul>
 				</nav>
 			</div>
@@ -69,7 +69,7 @@
 									<button class="btn btn-success btn-xs edit-modal" data-toggle="modal" data-target="#modal-user" data-id="ISBN564541"><i class="fa fa-plus"></i> Add New User</button>
 									
 								</div>
-									<div class="table-responsive">
+								
 									<table class="table table-striped table-bordered table-hover" id="table-user">
 									<thead>
 										<tr>
@@ -82,7 +82,7 @@
 										</tr>
 									</thead>
 									</table>
-									</div>
+								
 							</div>
 							<div class="row">
 								
@@ -168,35 +168,12 @@
         </button>
       </div>
       <div class="modal-body">
-			
-			<form>
-				<div class="form-group">
-					<label for="user-name-txt">User Name</label>
-					<input type="text" class="form-control" id="user-name-txt" placeholder="Enter User Name">
-					
-				</div>
-				<div class="form-group">
-					<label for="user-pass-txt">Password</label>
-					<input type="password" class="form-control" id="user-pass-txt" placeholder="Password">
-				</div>
-				<div class="form-group form-check">
-				
-					<label class="form-check-label" for="level-user-txt">Level User</label>
-					<select class="form-control" id="level-user-txt">
-						<option>admin</option>
-						<option>purchasing</option>
-						<option>warehouse</option>
-						<option>manager</option>
-					
-					</select>
-				</div>
-			
-		</form>
-		
+	  		<p>some content</p>
+        <input type="text" name="bookId" id="bookId" value=""/>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="btn-save">Save changes</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -234,32 +211,10 @@
 
 	$(document).on("click", ".edit-modal", function () {
      var myBookId = $(this).data('id');
-     $(".modal-body #exampleInputEmail1").val( myBookId );
+     $(".modal-body #bookId").val( myBookId );
      // As pointed out in comments, 
      // it is unnecessary to have to manually call the modal.
      // $('#addBookDialog').modal('show');
-	});
-
-		$('#btn-save').click(function(){
-			var user = $('#user-name-txt').val();
-			var pass = $('#user-pass-txt').val();
-			var level = $('#level-user-txt').val();
-
-			$.ajax({
-				type: "POST",
-				url: "admin/add_user",
-				data: 'user_name='+user+'&pass='+pass+'&level='+level,
-
-				success: function (response) {
-					if (response == "success") {
-						alert('Data berhasil disimpan');
-						window.location.replace("<?php echo base_url('admin'); ?>");
-					} else{
-						alert(response);
-					}
-					
-				}
-			});
-		});
+});
 } );
 </script>

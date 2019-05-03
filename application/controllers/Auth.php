@@ -7,10 +7,19 @@ class Auth extends CI_Controller {
     }
 
     function index(){
-        if ($this->session->userdata('login_status')==false) {
+        if ($this->session->userdata('login_status') != TRUE) {
            $this->load->view('page-login');
         } else {
-            $this->load->view('admin/home');
+            if ($this->session->userdata('level_user')=='admin') {
+                redirect (base_url('admin'));
+            }elseif ($this->session->userdata('level_user')=='purchasing'){
+                redirect (base_url('purchasing'));
+            }elseif ($this->session->userdata('level_user')=='warehouse'){
+                redirect (base_url('warehouse'));
+            }elseif ($this->session->userdata('level_user')=='manager') {
+                redirect (base_url('manager'));
+            }
+           
         }
         
     }

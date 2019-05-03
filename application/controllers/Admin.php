@@ -6,6 +6,35 @@ class Admin extends CI_Controller {
         $this->load->model('login');
     }
 
+    public function index(){
+        if ($this->session->userdata('level_user')=='admin') {
+            $this->load->view('admin/home');
+         } else {
+           redirect(base_url());
+         }
+    }
+//========menambah user ke tabel user=========
+    public function add_user(){
+        $user = $this->input->post('user_name');
+        $pass = sha1($this->input->post('pass'));
+        $level = $this->input->post('level');
+
+        $data_user = array(
+            'NAMA_USER'=> $user,
+            'PASSWORD' => $pass,
+            'LEVEL_USER' => $level
+        );
+
+        $hasil = $this->login->insert_data('TB_USER', $data_user);
+        if ($hasil) {
+            echo "success";
+        }else{
+            echo "gagal";
+        }
+    }
+//========end menambah user ke tabel user======
+
+//======Menampilkan tabel user=====================================
     public function datatable_user(){
         $limit = $this->input->post('length');
         $start = $this->input->post('start');
@@ -59,4 +88,5 @@ class Admin extends CI_Controller {
     
         echo json_encode($json_data); 
     }
+//==========End menampilkan tabel user==========================
 }
