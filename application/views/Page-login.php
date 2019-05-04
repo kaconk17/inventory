@@ -1,7 +1,6 @@
-<title>Login</title>
-<?php
-	include './application/views/header.php';
-?>
+<head>
+	<?php $this->load->view('global/header'); ?>
+</head>
 <body>
     <!-- WRAPPER -->
 	<div id="wrapper">
