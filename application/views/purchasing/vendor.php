@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <?php $this->load->view('global/header'); ?>
+<?php $this->load->view('global/header'); ?>
 </head>
 <body>
      <!-- WRAPPER -->
@@ -20,12 +20,30 @@
 					<!-- OVERVIEW -->
 					<div class="panel panel-headline">
 						<div class="panel-heading">
-							<h3 class="panel-title">Home</h3>
-							<p class="panel-subtitle">Purchasing</p>
+							<h3 class="panel-title">Vendor</h3>
+							<p class="panel-subtitle">Daftar Vendor</p>
 						</div>
 						<div class="panel-body">
 							<div class="row">
-							
+								<div >
+									<button class="btn btn-success btn-xs edit-modal" data-toggle="modal" data-target="#modal-user" data-id="ISBN564541"><i class="fa fa-plus"></i> Add New User</button>
+									
+								</div>
+								
+									<table class="table table-striped table-bordered table-hover" id="table-user">
+									<thead>
+										<tr>
+											<th>No.</th>
+											<th>ID</th>
+											<th>Nama User</th>
+											<th>Password</th>
+											<th>Level User</th>
+											<th>option</th>
+										</tr>
+									</thead>
+									</table>
+								
+							</div>
 							<div class="row">
 								
 								<div class="col-md-3">
@@ -88,6 +106,3 @@
 <?php $this->load->view('global/js'); ?>
 </body>
 </html>
-
-
-

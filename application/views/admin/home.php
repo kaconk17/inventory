@@ -1,52 +1,20 @@
-<title>Home</title>
-
-<?php include './application/views/header.php'; ?> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<?php $this->load->view('global/header'); ?>
+</head>
 <body>
-   <!-- WRAPPER -->
-	<div id="wrapper">
+	 <!-- WRAPPER -->
+	 <div id="wrapper">
 		<!-- NAVBAR -->
-		<nav class="navbar navbar-default navbar-fixed-top">
-			<div class="brand">
-				<a href="<? base_url(); ?>">Inventory</a>
-			</div>
-			<div class="container-fluid">
-				<div class="navbar-btn">
-					<button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
-				</div>
-				
-				<div class="navbar-btn navbar-btn-right">
-					
-					<a class="btn btn-success update-pro" href="auth/logout" title="Logout"><i class="fa fa-sign-out"></i></i> <span>LOGOUT</span></a>
-				</div>
-				<div id="navbar-menu">
-					<ul class="nav navbar-nav navbar-right">
-						
-					
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png" class="img-circle" alt="Avatar"> <span><?php echo $this->session->userdata('nama'); ?></span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
-							<ul class="dropdown-menu">
-								<li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
-			
-								<li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
-								<li><a href="#"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
-							</ul>
-						</li>
-					
-					</ul>
-				</div>
-			</div>
-		</nav>
+		<?php $this->load->view('global/navbar'); ?>
 		<!-- END NAVBAR -->
 		<!-- LEFT SIDEBAR -->
 		<div id="sidebar-nav" class="sidebar">
 			<div class="sidebar-scroll">
 				<nav>
 					<ul class="nav">
-						<li><a href="index.html" class="active"><i class="lnr lnr-user"></i> <span>Users</span></a></li>
-						
-						<li><a href="tables.html" class=""><i class="lnr lnr-dice"></i> <span>Tables</span></a></li>
-						<li><a href="typography.html" class=""><i class="lnr lnr-text-format"></i> <span>Typography</span></a></li>
-						<li><a href="icons.html" class=""><i class="lnr lnr-linearicons"></i> <span>Icons</span></a></li>
+						<li><a href="<?php echo base_url(); ?>" class="active"><i class="lnr lnr-user"></i> <span>Users</span></a></li>
 					</ul>
 				</nav>
 			</div>
@@ -139,24 +107,13 @@
 			<!-- END MAIN CONTENT -->
 		</div>
 		<!-- END MAIN -->
-		<div class="clearfix"></div>
-		<footer>
-			<div class="container-fluid">
-				<p class="copyright">&copy; 2019 Kelompok 4.</p>
-			</div>
-		</footer>
+	<?php $this->load->view('global/footer'); ?>
 	</div>
 	<!-- END WRAPPER -->
 	<!-- Javascript -->
-	<script src="<?php echo base_url(); ?>assets/vendor/jquery/jquery.min.js"></script>
-	<script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-	<script src="<?php echo base_url(); ?>assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-	<script src="<?php echo base_url(); ?>assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
-	<script src="<?php echo base_url(); ?>assets/vendor/chartist/js/chartist.min.js"></script>
-	<script src="<?php echo base_url(); ?>assets/scripts/klorofil-common.js"></script>
-	<script src="<?php echo base_url(); ?>assets/vendor/DataTables/datatables.js"></script>
-	<script src="<?php echo base_url(); ?>assets/vendor/DataTables/js/dataTables.bootstrap.js"></script>
+	<?php $this->load->view('global/js'); ?>
 </body>
+
 <!-- Modal -->
 <div class="modal fade" id="modal-user" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">

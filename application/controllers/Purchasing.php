@@ -16,4 +16,16 @@ public function index(){
 public function Items(){
     $this->load->view('purchasing/items');
 }
+
+public function vendor(){
+    $this->load->view('purchasing/vendor');
+}
+
+public function request(){
+    $this->load->view('purchasing/request');
+}
+
+public function order(){
+    $this->load->view('purchasing/order');
+}
 }
