@@ -1,16 +1,15 @@
 <?php
-
+defined('BASEPATH') OR exit('No direct script access allowed');
 class Purchasing extends CI_Controller {
-    function __construct(){
+    public function __construct(){
         parent::__construct();
-        $this->load->model('vendor');
+       $this->load->model('verif');
+       $this->verif->cek_session('purchasing');
     }
 public function index(){
-    if ($this->session->userdata('level_user')=='purchasing') {
+  
         $this->load->view('purchasing/home');
-     } else {
-       redirect(base_url());
-     }
+   
 }
 
 public function Items(){

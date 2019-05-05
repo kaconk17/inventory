@@ -1,17 +1,17 @@
 <?php
-
+defined('BASEPATH') OR exit('No direct script access allowed');
 class Warehouse extends CI_Controller {
     function __construct(){
         parent::__construct();
+        $this->load->model('verif');
+        $this->verif->cek_session('warehouse');
         $this->load->model('vendor');
     }
     
     public function index(){
-        if ($this->session->userdata('level_user')=='warehouse') {
+        
             $this->load->view('warehouse/home');
-         } else {
-           redirect(base_url());
-         }
+        
     }
 
     public function incoming(){

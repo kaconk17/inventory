@@ -1,17 +1,17 @@
 <?php
-
+defined('BASEPATH') OR exit('No direct script access allowed');
 class Admin extends CI_Controller {
     function __construct(){
         parent::__construct();
+        $this->load->model('verif');
+        $this->verif->cek_session('admin');
         $this->load->model('login');
     }
 
     public function index(){
-        if ($this->session->userdata('level_user')=='admin') {
+       
             $this->load->view('admin/home');
-         } else {
-           redirect(base_url());
-         }
+        
     }
 //========menambah user ke tabel user=========
     public function add_user(){
