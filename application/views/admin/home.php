@@ -34,19 +34,25 @@
 						<div class="panel-body">
 							<div class="row">
 								<div >
-									<button class="btn btn-success btn-xs edit-modal" data-toggle="modal" data-target="#modal-user" data-id="ISBN564541"><i class="fa fa-plus"></i> Add New User</button>
-									
+									<button class="btn btn-success btn-xs edit-modal" data-toggle="modal" data-target="#modal-user"><i class="fa fa-plus"></i> Add New User</button>
+									<button id="btn-edit" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i> Edit</button>
+									<button id="btn-delete" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete</button>
 								</div>
+							</div>
+
+							<div class="row">
 									<div class="table-responsive">
 									<table class="table table-striped table-bordered table-hover" id="table-user">
 									<thead>
 										<tr>
-											<th>No.</th>
+										
+											<th><input name="select_all" value="1" id="select-all" type="checkbox" /></th>
+											
 											<th>ID</th>
 											<th>Nama User</th>
-											<th>Password</th>
+											
 											<th>Level User</th>
-											<th>option</th>
+										
 										</tr>
 									</thead>
 									</table>
@@ -161,10 +167,10 @@
 </html>
 <script type = "text/javascript">
 	$(document).ready( function () {
-		 $('#table-user').DataTable({ 
+		var table = $('#table-user').DataTable({ 
                     "processing": true, //Feature control the processing indicator.
                     "serverSide": true, //Feature control DataTables' server-side processing mode.
-                    "order": [], //Initial no order.
+                    "order" : [], //Initial no order.
                     // Load data for the table's content from an Ajax source
                     "ajax": {
                         "url": '<?php echo base_url('admin/datatable_user'); ?>',
@@ -172,29 +178,88 @@
                     },
 					columnDefs : [{
 						"orderable" : false,
-						"targets" : 5,
-						"render" : function (data, type, row) {
-							var btn = "<center><button class=\"btn btn-warning btn-xs edit-modal\" data-toggle=\"modal\" data-target=\"#modal-user\" data-id="+data+"\"><i class=\"fa fa-edit\"></i></button><a href=\"#\" class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash\"></i></a></center>";
-							return btn;
-						}
+						"data" : null,
+    				"defaultContent" : '',
+						"className" : 'select-checkbox',
+            "targets" :   0,
+					
 					}],
+					select: {
+            "style" :    'os',
+            "selector" : 'td:first-child'
+        	},
                     //Set column definition initialisation properties.
-                    "columns": [
+                   "columns": [
+											
 												{"data": "no"},
                         {"data": "ID_USER"},
                         {"data": "NAMA_USER"},
-                        {"data": "PASSWORD"},
+                        
                         {"data": "LEVEL_USER"},
                     ]
- 
+											
                 });
+	
+
+	table.on("click", "th.select-checkbox", function() {
+    if ($("th.select-checkbox").hasClass("selected")) {
+        table.rows().deselect();
+        $("th.select-checkbox").removeClass("selected");
+    } else {
+        table.rows().select();
+        $("th.select-checkbox").addClass("selected");
+    }
+}).on("select deselect", function() {
+    ("Some selection or deselection going on")
+    if (table.rows({
+            selected: true
+        }).count() !== table.rows().count()) {
+        $("th.select-checkbox").removeClass("selected");
+    } else {
+        $("th.select-checkbox").addClass("selected");
+    }
+});
+
+	 $("#btn-edit").click(function(){
+  	var data = table
+            .row({ selected: true })
+            .data();
+  	console.log(data.ID_USER);   //display int value
+		});
 
 	$(document).on("click", ".edit-modal", function () {
      var myBookId = $(this).data('id');
      $(".modal-body #exampleInputEmail1").val( myBookId );
-     // As pointed out in comments, 
-     // it is unnecessary to have to manually call the modal.
-     // $('#addBookDialog').modal('show');
+    
+	});
+
+	$('#btn-delete').click(function(){
+		var data = table
+            .row({ selected: true })
+            .data();
+		if (!data) {
+			alert('Select the data !')
+		} else{
+			var r = confirm("Are you sure to delete "+data.NAMA_USER+" ?");
+			if (r == true) {
+				$.ajax({
+					type : "POST",
+					url : "<?php echo base_url('admin/hapus_user'); ?>",
+					data : "id="+data.ID_USER,
+
+					success : function (response) {
+						if (response == "success") {
+							window.location = '';
+						}else{
+							alert(response);
+						}
+					
+					}
+				});
+			}
+		}
+
+		
 	});
 
 		$('#btn-save').click(function(){

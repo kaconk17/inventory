@@ -20,6 +20,15 @@ class Login extends CI_Model{
     }
 //==========end insert data to table============
 
+//==========delete data from table==============
+
+    public function hapus_data($table, $data){
+    $exe = $this->db->delete($table,$data);
+    return $exe;
+}
+
+//==========end delete data from table============
+
 //===========count all row on table================
     public function count_all($table)
     {

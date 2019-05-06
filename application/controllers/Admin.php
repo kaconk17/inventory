@@ -34,6 +34,26 @@ class Admin extends CI_Controller {
     }
 //========end menambah user ke tabel user======
 
+//========menghapus user==========
+
+public function hapus_user(){
+    $id = $this->input->post('id');
+    
+    $data_user= array(
+        'ID_USER'=> $id
+    );
+
+    $hasil = $this->login->hapus_data('TB_USER', $data_user);
+    if ($hasil) {
+      echo "success";
+    } else {
+        echo "gagal";
+    }
+}
+
+
+//========end menghapus user==========
+
 //======Menampilkan tabel user=====================================
     public function datatable_user(){
         $limit = $this->input->post('length');
@@ -63,7 +83,7 @@ class Admin extends CI_Controller {
                 $no++;
 
                 
-                $nestedData['no'] = $no;
+                $nestedData['no'] = "";
                 $nestedData['ID_USER'] = $post->ID_USER;
                 $nestedData['NAMA_USER'] = $post->NAMA_USER;
                 $nestedData['PASSWORD'] = $post->PASSWORD;

@@ -9,6 +9,8 @@
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/linearicons/style.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/DataTables/datatables.css">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/DataTables/css/jquery.datatables.min.css">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/DataTables/css/select.datatables.min.css">
 	<!-- MAIN CSS -->
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/main.css">
 
