@@ -125,7 +125,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Add New User</h5>
+        <h5 class="modal-title" id="ModalCenterTitle">Add New User</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -160,6 +160,48 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" id="btn-save">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--=======modal edit user=========-->
+<div class="modal fade" id="modal-edit-user" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="CenterTitle">Edit User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+			
+			<form>
+				<div class="form-group">
+					<label for="user-name-txt">User Name</label>
+					<input type="text" class="form-control" id="edit-name-txt" Disabled>
+					
+				</div>
+		
+				<div class="form-group form-check">
+				
+					<label class="form-check-label" for="level-user-txt">Level User</label>
+					<select class="form-control" id="edit-level-txt">
+						<option>admin</option>
+						<option>purchasing</option>
+						<option>warehouse</option>
+						<option>manager</option>
+					
+					</select>
+				</div>
+			
+		</form>
+		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="btn-update">Update</button>
       </div>
     </div>
   </div>
@@ -224,14 +266,16 @@
   	var data = table
             .row({ selected: true })
             .data();
-  	console.log(data.ID_USER);   //display int value
+  	if (!data) {
+			alert('Select the data !');
+		}else{
+			$('#edit-name-txt').val(data.NAMA_USER);
+			$('#edit-level-txt').val(data.LEVEL_USER);
+			$('#modal-edit-user').modal('show');
+		}
 		});
 
-	$(document).on("click", ".edit-modal", function () {
-     var myBookId = $(this).data('id');
-     $(".modal-body #exampleInputEmail1").val( myBookId );
-    
-	});
+	
 
 	$('#btn-delete').click(function(){
 		var data = table
@@ -282,6 +326,27 @@
 					
 				}
 			});
+		});
+
+		$('#btn-update').click(function(){
+			var data = table
+            .row({ selected: true })
+            .data();
+			var id = data.ID_USER;
+			var level = $('#edit-level-txt').val();
+						$.ajax({
+							type : "POST",
+							url : "<?php echo base_url('admin/edit_user') ?>",
+							data : 'id='+id+'&level='+level,
+
+							success : function(response){
+								if (response == 'success') {
+									window.location = '';
+								}else{
+									alert(response);
+								}
+							}
+						});
 		});
 } );
 </script>

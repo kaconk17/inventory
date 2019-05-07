@@ -54,6 +54,27 @@ public function hapus_user(){
 
 //========end menghapus user==========
 
+//========end edit user==========
+
+public function edit_user(){
+    $id = array('ID_USER' => $this->input->post('id')
+        );
+    $data = array(
+        'LEVEL_USER'=> $this->input->post('level')
+    );
+
+    $hasil = $this->login->update_data('TB_USER',$id, $data);
+
+    if ($hasil) {
+       echo "success";
+    }else{
+        echo "gagal";
+    }
+}
+
+//========end edit user==========
+
+
 //======Menampilkan tabel user=====================================
     public function datatable_user(){
         $limit = $this->input->post('length');

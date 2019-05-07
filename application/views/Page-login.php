@@ -36,7 +36,7 @@
 						<div class="overlay"></div>
 						<div class="content text">
 							<h1 class="heading">System informasi inventory & pembelian</h1>
-							<p>by Kelompok 4</p>
+							<p>by Kelompok 1</p>
 						</div>
 					</div>
 					<div class="clearfix"></div>
