@@ -26,23 +26,25 @@
 						<div class="panel-body">
 							<div class="row">
 								<div >
-									<button class="btn btn-success btn-xs edit-modal" data-toggle="modal" data-target="#modal-user" data-id="ISBN564541"><i class="fa fa-plus"></i> Add New User</button>
+									<button class="btn btn-success btn-xs edit-modal" data-toggle="modal" data-target="#modal-vendor"><i class="fa fa-plus"></i> Add New Vendor</button>
+									<button id="btn-edit" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i> Edit</button>
+									<button id="btn-delete" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete</button>
 									
 								</div>
-								
-									<table class="table table-striped table-bordered table-hover" id="table-user">
+									<div class="table-responsive">
+									<table class="table table-striped table-bordered table-hover" id="table-vendor">
 									<thead>
 										<tr>
 											<th>No.</th>
 											<th>ID</th>
-											<th>Nama User</th>
-											<th>Password</th>
-											<th>Level User</th>
-											<th>option</th>
+											<th>Nama Vendor</th>
+											<th>Alamat</th>
+											<th>Telepon</th>
+											<th>email</th>
 										</tr>
 									</thead>
 									</table>
-								
+									</div>
 							</div>
 							<div class="row">
 								
@@ -55,45 +57,9 @@
 						</div>
 					</div>
 					<!-- END OVERVIEW -->
-					<div class="row">
-						<div class="col-md-6">
-							<!-- RECENT PURCHASES -->
-							
-							<!-- END RECENT PURCHASES -->
-						</div>
-						<div class="col-md-6">
-							<!-- MULTI CHARTS -->
-							
-							<!-- END MULTI CHARTS -->
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-7">
-							<!-- TODO LIST -->
-							
-							<!-- END TODO LIST -->
-						</div>
-						<div class="col-md-5">
-							<!-- TIMELINE -->
-							
-							<!-- END TIMELINE -->
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-4">
-							<!-- TASKS -->
-							
-							<!-- END TASKS -->
-						</div>
-						<div class="col-md-4">
-							
-						</div>
-						<div class="col-md-4">
-							<!-- REALTIME CHART -->
-							
-							<!-- END REALTIME CHART -->
-						</div>
-					</div>
+					
+					
+					
 				</div>
 			</div>
 			<!-- END MAIN CONTENT -->
@@ -105,4 +71,85 @@
 	<!-- Javascript -->
 <?php $this->load->view('global/js'); ?>
 </body>
+
+<!-- Modal -->
+<div class="modal fade" id="modal-vendor" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalCenterTitle">Add New Vendor</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+			
+			<form>
+				<div class="form-group">
+					<label for="user-name-txt">Nama Vendor</label>
+					<input type="text" class="form-control" id="vendor-name-txt" placeholder="Enter Vendor Name">
+					
+				</div>
+				<div class="form-group">
+					<label for="user-pass-txt">Alamat</label>
+					<textarea name="alamat-vendor" id="alamat-vendor" cols="30" rows="3" class="form-control"></textarea>
+				</div>
+				<div class="form-group form-check">
+					<label for="vendor-name-txt">Telepon</label>
+					<input type="text" class="form-control" id="vendor-tlp-txt" placeholder="Enter Phone">
+				</div>
+				<div class="form-group form-check">
+					<label for="vendor-name-txt">Email</label>
+					<input type="text" class="form-control" id="vendor-email-txt" placeholder="Enter Email">
+				</div>
+			
+		</form>
+		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="btn-save">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 </html>
+
+<script type="text/javascript">
+	$(document).ready( function () {
+		var table = $('#table-vendor').DataTable({ 
+                    "processing": true, //Feature control the processing indicator.
+                    "serverSide": true, //Feature control DataTables' server-side processing mode.
+                    "order" : [], //Initial no order.
+                    // Load data for the table's content from an Ajax source
+                    "ajax": {
+                        "url": '<?php echo base_url('purchasing/tampil_vendor'); ?>',
+                        "type": "POST"
+                    },
+					columnDefs : [{
+						"orderable" : false,
+						"data" : null,
+    				"defaultContent" : '',
+						"className" : 'select-checkbox',
+            "targets" :   0,
+					
+					}],
+					select: {
+            "style" :    'os',
+            "selector" : 'td:first-child'
+        	},
+                    //Set column definition initialisation properties.
+                   "columns": [
+											
+						{"data": "no"},
+                        {"data": "ID_VENDOR"},
+                        {"data": "NAMA_VENDOR"},
+                        {"data": "ALAMAT_VENDOR"},
+                        {"data": "TELP_VENDOR"},
+						{"data": "EMAIL_VENDOR"},
+                    ]
+											
+                });
+
+	});
+</script>
