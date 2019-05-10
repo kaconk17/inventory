@@ -91,7 +91,7 @@
 					
 				</div>
 				<div class="form-group">
-					<label for="user-pass-txt">Alamat</label>
+					<label for="alamat-txt">Alamat</label>
 					<textarea name="alamat-vendor" id="alamat-vendor" cols="30" rows="3" class="form-control"></textarea>
 				</div>
 				<div class="form-group form-check">
@@ -151,5 +151,75 @@
 											
                 });
 
+		$('#btn-save').click(function(){
+			var cond = $('#ModalCenterTitle').html();
+			if (cond == 'Add New Vendor') {
+				var nama = $('#vendor-name-txt').val();
+				var alamat = $('#alamat-vendor').val();
+				var telp = $('#vendor-tlp-txt').val();
+				var email = $('#vendor-email-txt').val();
+
+			$.ajax({
+				type: "POST",
+				url: "add_vendor",
+				data: 'nama='+nama+'&alamat='+alamat+'&telp='+telp+'&email='+email,
+
+				success: function (response) {
+					if (response == "success") {
+						alert('Data berhasil disimpan');
+						window.location.replace("<?php echo base_url('purchasing/vendor'); ?>");
+					} else{
+						alert(response);
+					}
+					
+				}
+			});
+			}else{
+				var data = table
+				.row({ selected: true })
+				.data();
+				var id = data.ID_VENDOR;
+				var nama = $('#vendor-name-txt').val();
+				var alamat = $('#alamat-vendor').val();
+				var telp = $('#vendor-tlp-txt').val();
+				var email = $('#vendor-email-txt').val();
+
+							$.ajax({
+								type : "POST",
+								url : "<?php echo base_url('purchasing/edit_vendor') ?>",
+								data : 'nama='+nama+'&alamat='+alamat+'&telp='+telp+'&email='+email+'&id='+id,
+
+								success : function(response){
+									if (response == 'success') {
+										window.location = '';
+									}else{
+										alert(response);
+									}
+								}
+							});
+			}
+		
+		
+		});
+
+		$("#btn-edit").click(function(){
+			var data = table
+					.row({ selected: true })
+					.data();
+			if (!data) {
+					alert('Select the data !');
+				}else{
+					$('#vendor-name-txt').val(data.NAMA_VENDOR);
+					$('#alamat-vendor').val(data.ALAMAT_VENDOR);
+					$('#vendor-tlp-txt').val(data.TELP_VENDOR);
+					$('#vendor-email-txt').val(data.EMAIL_VENDOR);
+				
+					$('#ModalCenterTitle').html('Edit Data Vendor');
+					
+					$('#modal-vendor').modal('show');
+				}
+		});
+
+	
 	});
 </script>

@@ -11,7 +11,11 @@ class Login extends CI_Model{
         }
     }
 //==========end check user for login==============
+    function create($table, $data){
+        $exe = $this->db->insert($table,$data);
+        return $exe;
 
+    }
 
 //==========insert data to table============
     public function insert_data($table, $data){

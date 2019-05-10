@@ -29,6 +29,52 @@ public function order(){
     $this->load->view('purchasing/order');
 }
 
+//============menambah data vendor============
+
+public function add_vendor(){
+    $data = array(
+        'NAMA_VENDOR' => $this->input->post('nama'),
+        'ALAMAT_VENDOR' => $this->input->post('alamat'),
+        'TELP_VENDOR' => $this->input->post('telp'),
+        'EMAIL_VENDOR' => $this->input->post('email')
+    );
+
+    $hasil = $this->vendor->create('TB_VENDOR', $data);
+    if ($hasil) {
+        echo "success";
+    }else{
+        echo "gagal";
+    }
+}
+
+//============ end menambah data vendor============
+
+//============edit data vendor============
+
+public function edit_vendor(){
+    $id = array('ID_VENDOR' => $this->input->post('id')
+        );
+
+        $data = array(
+            'NAMA_VENDOR' => $this->input->post('nama'),
+            'ALAMAT_VENDOR' => $this->input->post('alamat'),
+            'TELP_VENDOR' => $this->input->post('telp'),
+            'EMAIL_VENDOR' => $this->input->post('email')
+        );
+
+        $hasil = $this->vendor->edit('TB_VENDOR',$id, $data);
+
+        if ($hasil) {
+           echo "success";
+        }else{
+            echo "gagal";
+        }
+    }
+
+
+//============edit data vendor============
+
+
 //============menampilkan data vendor============
 public function tampil_vendor(){
     $limit = $this->input->post('length');
