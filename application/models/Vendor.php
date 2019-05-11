@@ -22,6 +22,15 @@ public function edit($table, $id, $data){
 //=========== edit vendor================
 
 
+//=========== hapus vendor================
+
+public function hapus($table, $data){
+    $exe = $this->db->delete($table,$data);
+    return $exe;
+}
+
+//=========== end hapus vendor================
+
 //===========count all row on table================
     public function count_all($table)
     {

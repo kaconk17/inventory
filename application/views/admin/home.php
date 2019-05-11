@@ -58,56 +58,13 @@
 									</table>
 									</div>
 							</div>
-							<div class="row">
-								
-								<div class="col-md-3">
-									
-									
-									
-								</div>
-							</div>
+							
 						</div>
 					</div>
 					<!-- END OVERVIEW -->
-					<div class="row">
-						<div class="col-md-6">
-							<!-- RECENT PURCHASES -->
-							
-							<!-- END RECENT PURCHASES -->
-						</div>
-						<div class="col-md-6">
-							<!-- MULTI CHARTS -->
-							
-							<!-- END MULTI CHARTS -->
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-7">
-							<!-- TODO LIST -->
-							
-							<!-- END TODO LIST -->
-						</div>
-						<div class="col-md-5">
-							<!-- TIMELINE -->
-							
-							<!-- END TIMELINE -->
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-4">
-							<!-- TASKS -->
-							
-							<!-- END TASKS -->
-						</div>
-						<div class="col-md-4">
-							
-						</div>
-						<div class="col-md-4">
-							<!-- REALTIME CHART -->
-							
-							<!-- END REALTIME CHART -->
-						</div>
-					</div>
+				
+				
+				
 				</div>
 			</div>
 			<!-- END MAIN CONTENT -->

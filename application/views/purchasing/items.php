@@ -21,79 +21,43 @@
 					<div class="panel panel-headline">
 						<div class="panel-heading">
 							<h3 class="panel-title">Items</h3>
-							<p class="panel-subtitle">Daftar Item</p>
+							<p class="panel-subtitle">Daftar Barang</p>
 						</div>
 						<div class="panel-body">
 							<div class="row">
 								<div >
-									<button class="btn btn-success btn-xs edit-modal" data-toggle="modal" data-target="#modal-user" data-id="ISBN564541"><i class="fa fa-plus"></i> Add New User</button>
-									
+									<button class="btn btn-success btn-xs edit-modal" data-toggle="modal" data-target="#modal-Item"><i class="fa fa-plus"></i> Add New Item</button>
+									<button id="btn-edit" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i> Edit</button>
+									<button id="btn-delete" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete</button>
 								</div>
-								
+							</div>
+
+							<div class="row">
+								<div class="table-responsive">
 									<table class="table table-striped table-bordered table-hover" id="table-user">
 									<thead>
 										<tr>
-											<th>No.</th>
+											<th>Check</th>
 											<th>ID</th>
-											<th>Nama User</th>
-											<th>Password</th>
-											<th>Level User</th>
-											<th>option</th>
+											<th>Kode Barang</th>
+											<th>Nama Barang</th>
+											<th>Satuan</th>
+											<th>Harga</th>
+											<th>Currency</th>
+											<th>Nama Vendor</th>
 										</tr>
 									</thead>
 									</table>
-								
-							</div>
-							<div class="row">
-								
-								<div class="col-md-3">
-									
-									
-									
 								</div>
+							</div>		
 							</div>
+						
 						</div>
 					</div>
 					<!-- END OVERVIEW -->
-					<div class="row">
-						<div class="col-md-6">
-							<!-- RECENT PURCHASES -->
-							
-							<!-- END RECENT PURCHASES -->
-						</div>
-						<div class="col-md-6">
-							<!-- MULTI CHARTS -->
-							
-							<!-- END MULTI CHARTS -->
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-7">
-							<!-- TODO LIST -->
-							
-							<!-- END TODO LIST -->
-						</div>
-						<div class="col-md-5">
-							<!-- TIMELINE -->
-							
-							<!-- END TIMELINE -->
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-4">
-							<!-- TASKS -->
-							
-							<!-- END TASKS -->
-						</div>
-						<div class="col-md-4">
-							
-						</div>
-						<div class="col-md-4">
-							<!-- REALTIME CHART -->
-							
-							<!-- END REALTIME CHART -->
-						</div>
-					</div>
+				
+					
+					
 				</div>
 			</div>
 			<!-- END MAIN CONTENT -->

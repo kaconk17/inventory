@@ -75,6 +75,27 @@ public function edit_vendor(){
 //============edit data vendor============
 
 
+//============hapus data vendor============
+public function hapus_vendor(){
+    $id = $this->input->post('id');
+    
+    $data_user= array(
+        'ID_VENDOR'=> $id
+    );
+
+    $hasil = $this->vendor->hapus('TB_VENDOR', $data_user);
+    if ($hasil) {
+      echo "success";
+    } else {
+        echo "gagal";
+    }
+}
+
+
+
+//============end hapus data vendor============
+
+
 //============menampilkan data vendor============
 public function tampil_vendor(){
     $limit = $this->input->post('length');

@@ -35,7 +35,7 @@
 									<table class="table table-striped table-bordered table-hover" id="table-vendor">
 									<thead>
 										<tr>
-											<th>No.</th>
+											<th>Select</th>
 											<th>ID</th>
 											<th>Nama Vendor</th>
 											<th>Alamat</th>
@@ -167,7 +167,7 @@
 				success: function (response) {
 					if (response == "success") {
 						alert('Data berhasil disimpan');
-						window.location.replace("<?php echo base_url('purchasing/vendor'); ?>");
+						window.location = '';
 					} else{
 						alert(response);
 					}
@@ -201,7 +201,7 @@
 		
 		
 		});
-
+//==============edit vendor==========================
 		$("#btn-edit").click(function(){
 			var data = table
 					.row({ selected: true })
@@ -219,6 +219,35 @@
 					$('#modal-vendor').modal('show');
 				}
 		});
+
+		$('#btn-delete').click(function(){
+		var data = table
+            .row({ selected: true })
+            .data();
+		if (!data) {
+			alert('Select the data !')
+		} else{
+			var r = confirm("Are you sure to delete "+data.NAMA_VENDOR+" ?");
+			if (r == true) {
+				$.ajax({
+					type : "POST",
+					url : "<?php echo base_url('purchasing/hapus_vendor'); ?>",
+					data : "id="+data.ID_VENDOR,
+
+					success : function (response) {
+						if (response == "success") {
+							window.location = '';
+						}else{
+							alert(response);
+						}
+					
+					}
+				});
+			}
+		}
+
+		
+	});
 
 	
 	});
