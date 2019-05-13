@@ -69,5 +69,16 @@ public function hapus($table, $data){
         $query = $this->db->get();
         return $query->num_rows();
     }
+
+    public function cari_vendor($keyword){
+        //$this->db->select('*');
+       // $this->db->from('TB_VENDOR');
+       // $this->db->like('NAMA_VENDOR',$keyword,'both');
+       // $this->db->limit(6,0);
+        $query ="SELECT * FROM TB_VENDOR WHERE NAMA_VENDOR like '%" . $keyword. "%' ORDER BY NAMA_VENDOR LIMIT 0,6";
+        //$query ="SELECT * FROM TB_VENDOR ORDER BY NAMA_VENDOR LIMIT 0,6";
+        $result = $this->db->query($query)->result();
+        return $result;
+    }
     
 }

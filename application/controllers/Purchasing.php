@@ -5,6 +5,7 @@ class Purchasing extends CI_Controller {
         parent::__construct();
        $this->load->model('verif');
        $this->load->model('vendor');
+       $this->load->model('barang');
        $this->verif->cek_session('purchasing');
     }
 public function index(){
@@ -153,4 +154,103 @@ public function tampil_vendor(){
 }
 
 //============menampilkan data vendor============
+
+//============menampilkan barang===============
+public function tampil_barang(){
+    $limit = $this->input->post('length');
+    $start = $this->input->post('start');
+    
+    $record = $this->barang->count_all('TB_BARANG');
+    $totalFiltered = $record;
+    
+    if(empty($this->input->post('search')['value']))
+    {            
+        $posts = $this->barang->get_alldata('TB_BARANG',$limit,$start);
+    }
+    else {
+        $search = $this->input->post('search')['value']; 
+
+        $posts =  $this->barang->search_alldata('TB_BARANG',$limit,$start,$search);
+
+        $totalFiltered = $this->barang->count_search('TB_BARANG',$search);
+    }
+    $no = $start;
+    $data = array();
+    if(!empty($posts))
+    {
+        
+            foreach ($posts as $post)
+        {
+            $no++;
+
+            
+            $nestedData['no'] = "";
+            $nestedData['ID_BARANG'] = $post->ID_BARANG;
+            $nestedData['KODE_BARANG'] = $post->KODE_BARANG;
+            $nestedData['NAMA_BARANG'] = $post->NAMA_BARANG;
+            $nestedData['SATUAN'] = $post->SATUAN;
+            $nestedData['HARGA_BARANG'] = $post->HARGA_BARANG;
+            $nestedData['CURRENCY'] = $post->CURRENCY;
+            $nestedData['NAMA_VENDOR'] = $post->NAMA_VENDOR;
+            
+            
+            
+            $data[] = $nestedData;
+
+        } 
+        
+        
+    }
+
+    $json_data = array(
+        'draw'            => intval($this->input->post('draw')),  
+        'recordsTotal'    => intval($record),  
+        'recordsFiltered' => intval($totalFiltered), 
+        'data'            => $data   
+        );
+
+    echo json_encode($json_data); 
+}
+//===============end menampilkan barang===================
+
+//=============== vendor sugestion==============
+
+public function sugest_vendor(){
+
+    $keyword = $this->input->post('keyword');
+    //$keyword = 'CV';
+    if(!empty($keyword)) {
+       $result = $this->vendor->cari_vendor($keyword);
+       $data = array();
+        if(!empty($result)) {
+           // echo " <ul id='vendor-list'>";
+            foreach($result as $vendor) {
+            //echo " <li onClick='selectVendor(".$vendor->NAMA_VENDOR.");>".$vendor->NAMA_VENDOR."</li>";
+               //$nested_data['NAMA_VENDOR']= $vendor->NAMA_VENDOR;
+               //$nested_data['ID_VENDOR']= $vendor->ID_VENDOR;
+                echo "<li onClick=\"selectVendor('".$vendor->NAMA_VENDOR."');\" class=\"list-group-item list-group-item-primary\">".$vendor->NAMA_VENDOR."</li>";
+               //$data[]=$nested_data;
+        }
+        //echo json_encode($data);
+       // echo "</ul>";
+       } 
+       } 
+}
+
+public function test_vendor(){
+    $keyword = $this->input->get('term');
+    $result = $this->vendor->cari_vendor($keyword);
+    $data= array();
+    if (!empty($result)) {
+        foreach ($result as $key) {
+            $nestedData['label'] = $key->NAMA_VENDOR;
+            $nestedData['value'] = $key->ID_VENDOR;
+
+            $data[]= $nestedData;
+        }
+
+        echo json_encode($data); 
+    }
+}
+
 }

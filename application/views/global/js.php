@@ -2,7 +2,7 @@
     <script src="<?php echo base_url(); ?>assets/vendor/jquery/jquery.min.js"></script>
 	<script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="<?php echo base_url(); ?>assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-	<!--<script src="<?php echo base_url(); ?>assets/vendor/jquery/jquery-3.3.1.js"></script>-->
+	
 	
 	<script src="<?php echo base_url(); ?>assets/scripts/klorofil-common.js"></script>
 	<script src="<?php echo base_url(); ?>assets/vendor/DataTables/js/jquery.datatables.min.js"></script>
