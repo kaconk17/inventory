@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
    <?php $this->load->view('global/header'); ?>
-   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/jquery-ui-1.12.1/jquery-ui.css">
+   <link rel="STYLESHEET" type="text/css" href="<?php echo base_url(); ?>assets/vendor/dhtmlxCombo/codebase/dhtmlxcombo.css">
+        <script src="<?php echo base_url(); ?>assets/vendor/dhtmlxCombo/codebase/dhtmlxcombo.js"></script>  
 </head>
 <body>
      <!-- WRAPPER -->
@@ -27,7 +28,8 @@
 						<div class="panel-body">
 							<div class="row">
 <script type="text/javascript">
- $( function() {
+
+ /*$( function() {
     function log( message ) {
       $( "<div>" ).text( message ).prependTo( "#log" );
       $( "#log" ).scrollTop( 0 );
@@ -57,7 +59,7 @@
       }
     } );
   
-});
+});*/
 </script>
 							<div class="row">
 								
@@ -65,7 +67,7 @@
 									
 								<div class="ui-widget">
 									<label for="autocomplete">Vendor: </label>
-									<input id="autocomplete">
+									<div id="mycombo"></div>
 								</div>
 								<div class="ui-widget" style="margin-top:2em; font-family:Arial">
 								Result:
@@ -126,9 +128,15 @@
 	<!-- END WRAPPER -->
 	<!-- Javascript -->
 <?php $this->load->view('global/js'); ?>
-<script src="<?php echo base_url(); ?>assets/vendor/jquery-ui-1.12.1/jquery-ui.js"></script>
+
 </body>
 </html>
+<script type="text/javascript">
+$(document).ready(function(){
+	myCombo = new dhtmlXCombo("mycombo");
+	myCombo.load("purchasing/test_vendor");
+});
+</script>
 
 
 

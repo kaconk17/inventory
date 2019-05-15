@@ -82,38 +82,43 @@
       </div>
       <div class="modal-body">
 			
-			<form>
+	  	<form>
+			
 				<div class="form-group">
-					<label for="user-name-txt">Nama Vendor</label>
-					<input type="text" class="form-control" id="nama-vendor" placeholder="Enter Vendor Name">
-					<div id="suggesstion-box">
-						<ul id="vendor-list" class="list-group"></ul>
-					</div>
-					<script type="text/javascript">
-					function selectVendor(val) {
-						$("#nama-vendor").val(val);
-						$("#suggesstion-box").hide();
-						}
-					</script>
-					
+				<label for="nama-vendor">Nama Vendor</label>
+				
+				<select name="nama-vendor" id="nama-vendor" class="form-control">
+					<option value="">Chose vendor</option>
+				</select>
 				</div>
-				<div class="form-group">
-					<label for="user-name-txt">Nama Barang</label>
-					<input type="text" class="form-control" id="vendor-name-txt" placeholder="Enter Vendor Name">
-					
+				
+			
+			<div class="form-group">
+				<label for="inputAddress">Address</label>
+				<input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+			</div>
+			<div class="form-group">
+				<label for="inputAddress2">Address 2</label>
+				<input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-6">
+				<label for="inputCity">City</label>
+				<input type="text" class="form-control" id="inputCity">
 				</div>
-				<div class="form-group">
-					<label for="alamat-txt">Alamat</label>
-					<textarea name="alamat-vendor" id="alamat-vendor" cols="30" rows="3" class="form-control"></textarea>
+				<div class="form-group col-md-4">
+				<label for="inputState">State</label>
+				<select id="inputState" class="form-control">
+					<option selected>Choose...</option>
+					<option>...</option>
+				</select>
 				</div>
-				<div class="form-group form-check">
-					<label for="vendor-name-txt">Telepon</label>
-					<input type="text" class="form-control" id="vendor-tlp-txt" placeholder="Enter Phone">
+				<div class="form-group col-md-2">
+				<label for="inputZip">Zip</label>
+				<input type="text" class="form-control" id="inputZip">
 				</div>
-				<div class="form-group form-check">
-					<label for="vendor-name-txt">Email</label>
-					<input type="text" class="form-control" id="vendor-email-txt" placeholder="Enter Email">
-				</div>
+			</div>
+			
 			
 		</form>
 		
@@ -163,8 +168,9 @@ $(document).ready(function() {
                     ]
 											
                 });
+		get_vendor();
 
-	$("#nama-vendor").keyup(function(){
+	$("#nama-vendor3").keyup(function(){
 		$.ajax({
 		type: "POST",
 		url: "sugest_vendor",
@@ -176,15 +182,15 @@ $(document).ready(function() {
 			//var b= jQuery.parseJSON(data);
 			//var len = b.length;
 			//$('#vendor-list').html('');
-			$("#suggesstion-box").show();
+			//$("#suggesstion-box").show();
 			//for (var i = 0; i < len; i++) {
 				//var li= "<li>"+b[i].NAMA_VENDOR+"</li>";
 				//var li = "<li onClick='selectVendor("+b[i].NAMA_VENDOR+");>"+b[i].NAMA_VENDOR+"</li>";
 				
 			//}
-			$("#vendor-list").html(data);
+			$("#nama-vendor").append(data);
 			
-			$("#nama-vendor").css("background","#FFF");
+			//$("#nama-vendor").css("background","#FFF");
 			//alert(len);
 			//alert(b[0].NAMA_VENDOR);
 		}
@@ -195,5 +201,19 @@ $(document).ready(function() {
 	
 	
 });
+function get_vendor () {
+	$.ajax({
+		type: "POST",
+		url: "sugest_vendor",
+		
+		beforeSend: function(){
+			$("#nama-vendor").css("background","#FFF");
+		},
+		success: function(data){
+			$("#nama-vendor").append(data);
+		}
+
+	});
+}
 
 </script>

@@ -217,10 +217,10 @@ public function tampil_barang(){
 
 public function sugest_vendor(){
 
-    $keyword = $this->input->post('keyword');
+    //$keyword = $this->input->post('keyword');
     //$keyword = 'CV';
-    if(!empty($keyword)) {
-       $result = $this->vendor->cari_vendor($keyword);
+    //if(!empty($keyword)) {
+       $result = $this->vendor->select_all('TB_VENDOR');
        $data = array();
         if(!empty($result)) {
            // echo " <ul id='vendor-list'>";
@@ -228,25 +228,26 @@ public function sugest_vendor(){
             //echo " <li onClick='selectVendor(".$vendor->NAMA_VENDOR.");>".$vendor->NAMA_VENDOR."</li>";
                //$nested_data['NAMA_VENDOR']= $vendor->NAMA_VENDOR;
                //$nested_data['ID_VENDOR']= $vendor->ID_VENDOR;
-                echo "<li onClick=\"selectVendor('".$vendor->NAMA_VENDOR."');\" class=\"list-group-item list-group-item-primary\">".$vendor->NAMA_VENDOR."</li>";
+                //echo "<li onClick=\"selectVendor('".$vendor->ID_VENDOR."','".$vendor->NAMA_VENDOR."');\" class=\"list-group-item list-group-item-primary\">".$vendor->NAMA_VENDOR."</li>";
                //$data[]=$nested_data;
+               echo "<option >".$vendor->NAMA_VENDOR."</option>";
         }
         //echo json_encode($data);
        // echo "</ul>";
-       } 
+      // } 
        } 
 }
 
 public function test_vendor(){
-    $keyword = $this->input->get('term');
-    $result = $this->vendor->cari_vendor($keyword);
+    //$keyword = $this->input->get('term');
+    $result = $this->vendor->select_all('TB_VENDOR');
     $data= array();
     if (!empty($result)) {
         foreach ($result as $key) {
             $nestedData['label'] = $key->NAMA_VENDOR;
             $nestedData['value'] = $key->ID_VENDOR;
 
-            $data[]= $nestedData;
+            $data['options']= $nestedData;
         }
 
         echo json_encode($data); 

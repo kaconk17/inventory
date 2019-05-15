@@ -80,5 +80,10 @@ public function hapus($table, $data){
         $result = $this->db->query($query)->result();
         return $result;
     }
+
+    public function select_all($table){
+        $result = $this->db->get($table)->result();
+        return $result;
+    }
     
 }
