@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: May 15, 2019 at 01:59 PM
+-- Generation Time: May 18, 2019 at 04:00 PM
 -- Server version: 5.6.38
 -- PHP Version: 7.2.1
 
@@ -29,6 +29,51 @@ CREATE TABLE `TB_BARANG` (
   `CURRENCY` varchar(4) NOT NULL,
   `ID_VENDOR` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `TB_BARANG`
+--
+
+INSERT INTO `TB_BARANG` (`ID_BARANG`, `KODE_BARANG`, `NAMA_BARANG`, `SATUAN`, `HARGA_BARANG`, `CURRENCY`, `ID_VENDOR`) VALUES
+(1, 'A0001', 'Sirup ABC 1000ml', 'Pcs', '25000.000', 'IDR', 1),
+(3, 'I0001', 'Indomie Goreng', 'Box', '50000.000', 'IDR', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `TB_ORDER`
+--
+
+CREATE TABLE `TB_ORDER` (
+  `ID_ORDER` int(20) NOT NULL,
+  `ID_PERMINTAAN` int(20) NOT NULL,
+  `HARGA_TOTAL` decimal(8,2) NOT NULL,
+  `APPROVAL` varchar(10) NOT NULL,
+  `STATUS_ORDER` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `TB_PERMINTAAN`
+--
+
+CREATE TABLE `TB_PERMINTAAN` (
+  `ID_PERMINTAAN` int(20) NOT NULL,
+  `TANGGAL_PERMINTAAN` date NOT NULL,
+  `ID_BARANG` int(20) NOT NULL,
+  `QTY_BARANG` decimal(10,0) NOT NULL,
+  `TANGGAL_KIRIM` date NOT NULL,
+  `STATUS_PERMINTAAN` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `TB_PERMINTAAN`
+--
+
+INSERT INTO `TB_PERMINTAAN` (`ID_PERMINTAAN`, `TANGGAL_PERMINTAAN`, `ID_BARANG`, `QTY_BARANG`, `TANGGAL_KIRIM`, `STATUS_PERMINTAAN`) VALUES
+(1, '2019-05-18', 3, '5', '2019-05-27', ''),
+(3, '2019-05-18', 1, '10', '2019-05-25', '');
 
 -- --------------------------------------------------------
 
@@ -88,6 +133,20 @@ ALTER TABLE `TB_BARANG`
   ADD KEY `ID_VENDOR` (`ID_VENDOR`);
 
 --
+-- Indexes for table `TB_ORDER`
+--
+ALTER TABLE `TB_ORDER`
+  ADD PRIMARY KEY (`ID_ORDER`),
+  ADD KEY `ID_PERMINTAAN` (`ID_PERMINTAAN`);
+
+--
+-- Indexes for table `TB_PERMINTAAN`
+--
+ALTER TABLE `TB_PERMINTAAN`
+  ADD PRIMARY KEY (`ID_PERMINTAAN`),
+  ADD KEY `ID_BARANG` (`ID_BARANG`);
+
+--
 -- Indexes for table `TB_USER`
 --
 ALTER TABLE `TB_USER`
@@ -107,7 +166,19 @@ ALTER TABLE `TB_VENDOR`
 -- AUTO_INCREMENT for table `TB_BARANG`
 --
 ALTER TABLE `TB_BARANG`
-  MODIFY `ID_BARANG` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_BARANG` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `TB_ORDER`
+--
+ALTER TABLE `TB_ORDER`
+  MODIFY `ID_ORDER` int(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `TB_PERMINTAAN`
+--
+ALTER TABLE `TB_PERMINTAAN`
+  MODIFY `ID_PERMINTAAN` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `TB_USER`
@@ -130,3 +201,15 @@ ALTER TABLE `TB_VENDOR`
 --
 ALTER TABLE `TB_BARANG`
   ADD CONSTRAINT `tb_barang_ibfk_1` FOREIGN KEY (`ID_VENDOR`) REFERENCES `TB_VENDOR` (`ID_VENDOR`) ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `TB_ORDER`
+--
+ALTER TABLE `TB_ORDER`
+  ADD CONSTRAINT `tb_order_ibfk_1` FOREIGN KEY (`ID_PERMINTAAN`) REFERENCES `TB_PERMINTAAN` (`ID_PERMINTAAN`) ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `TB_PERMINTAAN`
+--
+ALTER TABLE `TB_PERMINTAAN`
+  ADD CONSTRAINT `tb_permintaan_ibfk_1` FOREIGN KEY (`ID_BARANG`) REFERENCES `TB_BARANG` (`ID_BARANG`) ON UPDATE NO ACTION;
