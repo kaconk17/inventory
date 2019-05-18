@@ -289,4 +289,62 @@ public function hapus_barang(){
     }
 }
 
+public function tampil_permintaan(){
+    $this->load->model('permintaan');
+    $limit = $this->input->post('length');
+    $start = $this->input->post('start');
+    
+    $record = $this->permintaan->count_all('TB_PERMINTAAN');
+    $totalFiltered = $record;
+    
+    if(empty($this->input->post('search')['value']))
+    {            
+        $posts = $this->permintaan->get_alldata('TB_PERMINTAAN',$limit,$start);
+    }
+    else {
+        $search = $this->input->post('search')['value']; 
+
+        $posts =  $this->permintaan->search_alldata('TB_PERMINTAAN',$limit,$start,$search);
+
+        $totalFiltered = $this->permintaan->count_search('TB_PERMINTAAN',$search);
+    }
+    $no = $start;
+    $data = array();
+    if(!empty($posts))
+    {
+        
+            foreach ($posts as $post)
+        {
+            $no++;
+
+            
+            $nestedData['no'] = "";
+            $nestedData['ID_PERMINTAAN'] = $post->ID_PERMINTAAN;
+            $nestedData['TANGGAL_PERMINTAAN'] = $post->TANGGAL_PERMINTAAN;
+            $nestedData['NAMA_VENDOR'] = $post->NAMA_VENDOR;
+            $nestedData['NAMA_BARANG'] = $post->NAMA_BARANG;
+            $nestedData['QTY_BARANG'] = $post->QTY_BARANG;
+            $nestedData['SATUAN'] = $post->SATUAN;
+            $nestedData['TANGGAL_KIRIM'] = $post->TANGGAL_KIRIM;
+            $nestedData['STATUS_PERMINTAAN'] = $post->STATUS_PERMINTAAN;
+            
+            
+            
+            $data[] = $nestedData;
+
+        } 
+        
+        
+    }
+
+    $json_data = array(
+        'draw'            => intval($this->input->post('draw')),  
+        'recordsTotal'    => intval($record),  
+        'recordsFiltered' => intval($totalFiltered), 
+        'data'            => $data   
+        );
+
+    echo json_encode($json_data); 
+}
+
 }

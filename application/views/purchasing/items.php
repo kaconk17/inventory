@@ -186,22 +186,7 @@ $(document).ready(function() {
                 });
 		get_vendor();
 
-/*	$("#nama-vendor3").keyup(function(){
-		$.ajax({
-		type: "POST",
-		url: "sugest_vendor",
-		data:'keyword='+$(this).val(),
-		beforeSend: function(){
-			$("#nama-vendor").css("background","#FFF");
-		},
-		success: function(data){
-		
-			$("#nama-vendor").append(data);
-			
-		
-		}
-		});
-	});*/
+
 
 	$('#btn-save').click(function(){
 		var cond = $('#ModalCenterTitle').html();
