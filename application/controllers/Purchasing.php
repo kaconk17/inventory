@@ -230,7 +230,7 @@ public function sugest_vendor(){
                //$nested_data['ID_VENDOR']= $vendor->ID_VENDOR;
                 //echo "<li onClick=\"selectVendor('".$vendor->ID_VENDOR."','".$vendor->NAMA_VENDOR."');\" class=\"list-group-item list-group-item-primary\">".$vendor->NAMA_VENDOR."</li>";
                //$data[]=$nested_data;
-               echo "<option >".$vendor->NAMA_VENDOR."</option>";
+               echo "<option value= ".$vendor->ID_VENDOR.">".$vendor->NAMA_VENDOR."</option>";
         }
         //echo json_encode($data);
        // echo "</ul>";
@@ -238,19 +238,54 @@ public function sugest_vendor(){
        } 
 }
 
-public function test_vendor(){
-    //$keyword = $this->input->get('term');
-    $result = $this->vendor->select_all('TB_VENDOR');
-    $data= array();
-    if (!empty($result)) {
-        foreach ($result as $key) {
-            $nestedData['label'] = $key->NAMA_VENDOR;
-            $nestedData['value'] = $key->ID_VENDOR;
+public function simpan_barang(){
+    $this->load->model('barang');
+    $data = array(
+        'KODE_BARANG' => $this->input->post('kode_barang'),
+        'NAMA_BARANG' => $this->input->post('nama_barang'),
+        'SATUAN' => $this->input->post('satuan'),
+        'HARGA_BARANG' => $this->input->post('harga'),
+        'CURRENCY' => $this->input->post('currency'),
+        'ID_VENDOR' => $this->input->post('id_sup')
+    );
 
-            $data['options']= $nestedData;
-        }
+    $hasil = $this->barang->simpan('TB_BARANG', $data);
+    if ($hasil) {
+        echo "success";
+    }else{
+        echo "gagal";
+    }
 
-        echo json_encode($data); 
+}
+
+public function update_barang(){
+    $this->load->model('barang');
+    $id = array( 'ID_BARANG' => $this->input->post('id'));
+    $data = array(
+       
+        'NAMA_BARANG' => $this->input->post('nama_barang'),
+        'SATUAN'=> $this->input->post('satuan'),
+        'HARGA_BARANG'=> $this->input->post('harga_barang')
+    );
+
+    $hasil = $this->barang->edit('TB_BARANG',$id, $data);
+    if ($hasil) {
+        echo "success";
+    }else{
+        echo "gagal";
+    }
+
+}
+
+public function hapus_barang(){
+    $this->load->model('barang');
+    $id = array('ID_BARANG'=> $this->input->post('id'));
+
+    $hasil = $this->barang->hapus('TB_BARANG', $id);
+    if ($hasil) {
+      echo "success";
+    } else {
+        echo "gagal";
     }
 }
 

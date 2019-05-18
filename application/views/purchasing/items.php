@@ -81,55 +81,71 @@
         </button>
       </div>
       <div class="modal-body">
-			
+			<div class="container-fluid">
 	  	<form>
-			
-				<div class="form-group">
+			<div class="form-row">
+				<div class="form-group col-md-6">
 				<label for="nama-vendor">Nama Vendor</label>
 				
 				<select name="nama-vendor" id="nama-vendor" class="form-control">
-					<option value="">Chose vendor</option>
+					<option value="">Choose vendor</option>
 				</select>
 				</div>
-				
-			
-			<div class="form-group">
-				<label for="inputAddress">Address</label>
-				<input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+
+					<div class="form-group col-md-6">
+      			<label for="kode_barang">Kode Barang</label>
+      			<input type="text" class="form-control" id="kode_barang" placeholder="Kode Barang">
+    			</div>
+				</div>
+			<div class="form-row">
+			<div class="form-group col-md-8">
+				<label for="nama_barang">Nama Barang</label>
+				<input type="text" class="form-control" id="nama_barang" placeholder="Nama Barang">
 			</div>
-			<div class="form-group">
-				<label for="inputAddress2">Address 2</label>
-				<input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+			<div class="form-row">
+			<div class="form-group col-md-4">
+				<label for="satuan">Satuan</label>
+				<select name="satuan" id="satuan" class="form-control">
+				<option value="">Choose..</option>
+					<option value="Pcs">Pcs</option>
+					<option value="Kg">Kg</option>
+					<option value="Liter">Liter</option>
+					<option value="Pack">Pack</option>
+					<option value="Meter">Meter</option>
+					<option value="Box">Box</option>
+				</select>
+			</div>
+			</div>
 			</div>
 			<div class="form-row">
 				<div class="form-group col-md-6">
-				<label for="inputCity">City</label>
-				<input type="text" class="form-control" id="inputCity">
-				</div>
-				<div class="form-group col-md-4">
-				<label for="inputState">State</label>
-				<select id="inputState" class="form-control">
-					<option selected>Choose...</option>
-					<option>...</option>
-				</select>
+				<label for="harga_barang">Harga</label>
+				<input type="text" class="form-control" id="harga_barang">
 				</div>
 				<div class="form-group col-md-2">
-				<label for="inputZip">Zip</label>
-				<input type="text" class="form-control" id="inputZip">
+				<label for="currency">Currency</label>
+				<select id="currency" class="form-control">
+					
+					<option value="IDR">IDR</option>
+					<option value="USD">USD</option>
+					<option value="JPY">JPY</option>
+				</select>
 				</div>
 			</div>
 			
 			
 		</form>
-		
+		</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="btn-save">Save changes</button>
+        <button type="button" class="btn btn-primary" id="btn-save">Simpan Barang</button>
       </div>
     </div>
   </div>
 </div>
+
+
 </html>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -155,14 +171,14 @@ $(document).ready(function() {
             "selector" : 'td:first-child'
         	},
                     //Set column definition initialisation properties.
-                   "columns": [
+            "columns": [
 											
 						{"data": "no"},
-                        {"data": "ID_BARANG"},
-                        {"data": "KODE_BARANG"},
-                        {"data": "NAMA_BARANG"},
-                        {"data": "SATUAN"},
-						{"data": "HARGA_BARANG"},
+						{"data": "ID_BARANG"},
+						{"data": "KODE_BARANG"},
+						{"data": "NAMA_BARANG"},
+						{"data": "SATUAN"},
+						{"data": "HARGA_BARANG",render: $.fn.dataTable.render.number( ',', '.', 2 )},
 						{"data": "CURRENCY"},
 						{"data": "NAMA_VENDOR"},
                     ]
@@ -170,7 +186,7 @@ $(document).ready(function() {
                 });
 		get_vendor();
 
-	$("#nama-vendor3").keyup(function(){
+/*	$("#nama-vendor3").keyup(function(){
 		$.ajax({
 		type: "POST",
 		url: "sugest_vendor",
@@ -179,28 +195,97 @@ $(document).ready(function() {
 			$("#nama-vendor").css("background","#FFF");
 		},
 		success: function(data){
-			//var b= jQuery.parseJSON(data);
-			//var len = b.length;
-			//$('#vendor-list').html('');
-			//$("#suggesstion-box").show();
-			//for (var i = 0; i < len; i++) {
-				//var li= "<li>"+b[i].NAMA_VENDOR+"</li>";
-				//var li = "<li onClick='selectVendor("+b[i].NAMA_VENDOR+");>"+b[i].NAMA_VENDOR+"</li>";
-				
-			//}
+		
 			$("#nama-vendor").append(data);
 			
-			//$("#nama-vendor").css("background","#FFF");
-			//alert(len);
-			//alert(b[0].NAMA_VENDOR);
+		
 		}
 		});
+	});*/
+
+	$('#btn-save').click(function(){
+		var cond = $('#ModalCenterTitle').html();
+		if (cond == 'Add New Item') {
+			var id_sup = $('#nama-vendor').val();
+			var kode_barang = $('#kode_barang').val();
+			var nama_barang = $('#nama_barang').val();
+			var satuan = $('#satuan').val();
+			var harga_barang = $('#harga_barang').val();
+			var currency = $('#currency').val();
+			var barang = 'id_sup='+id_sup+'&kode_barang='+kode_barang+'&nama_barang='+nama_barang+'&satuan='+satuan+'&harga='+harga_barang+'&currency='+currency;
+			send_data('simpan_barang', barang,'Simpan');
+		}else{
+			var data = table
+				.row({ selected: true })
+				.data();
+			var id = data.ID_BARANG;
+			var nama_barang = $('#nama_barang').val();
+			var satuan = $('#satuan').val();
+			var harga_barang = $('#harga_barang').val();
+			var barang = 'nama_barang='+nama_barang+'&satuan='+satuan+'&harga_barang='+harga_barang+'&id='+id;
+			send_data('update_barang', barang, 'Update');
+		}
+		
 	});
 
-	
+	$("#btn-edit").click(function(){
+			var data = table
+					.row({ selected: true })
+					.data();
+			if (!data) {
+					alert('Select the data !');
+				}else{
+					$('#nama-vendor').html('<option>'+data.NAMA_VENDOR+'</option>');
+					$('#nama_barang').val(data.NAMA_BARANG);
+					$('#kode_barang').val(data.KODE_BARANG);
+					$('#satuan').val(data.SATUAN);
+					$('#harga_barang').val(data.HARGA_BARANG);
+					$('#currency').val(data.CURRENCY);
+					$('#ModalCenterTitle').html('Edit Data Barang');
+					
+					$('#modal-barang').modal('show');
+				}
+		});
+
+		$('#btn-delete').click(function(){
+		var data = table
+            .row({ selected: true })
+            .data();
+		if (!data) {
+			alert('Select the data !')
+		} else{
+			var r = confirm("Are you sure to delete "+data.NAMA_BARANG+" ?");
+			if (r == true) {
+				var id = 'id='+data.ID_BARANG;
+				send_data('hapus_barang',id, 'Hapus');
+			}
+			
+		}
+
+		
+	});
 	
 	
 });
+
+function send_data(url, input, coment) {
+	$.ajax({
+				type: "POST",
+				url: url,
+				data: input,
+
+				success : function (response) {
+					if (response == 'success') {
+						alert(coment+' Data berhasil');
+							window.location = '';
+					}else{
+						alert(response);
+					}
+				}
+
+			});
+}
+
 function get_vendor () {
 	$.ajax({
 		type: "POST",

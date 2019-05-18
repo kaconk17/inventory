@@ -9,7 +9,32 @@ class Barang extends CI_Model{
     }
 //===========end count all row on table================
 
+//============simpan barang===================
 
+public function simpan($table, $data){
+    $exe = $this->db->insert($table,$data);
+    return $exe;
+}
+
+//============ end simpan barang===================
+
+//============edit barang==================
+public function edit($table, $id, $data){
+    $exe = $this->db->set($data);
+    $this->db->where($id);
+    $this->db->update($table);
+    return $exe;
+}
+
+//=============end edit barang==============
+
+//==============hapus barang================
+public function hapus($table, $data){
+    $exe = $this->db->delete($table,$data);
+    return $exe;
+}
+
+//==============end hapus barang================
 
     public function get_alldata($table,$perpage,$offset){
        
