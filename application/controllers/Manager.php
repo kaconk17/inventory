@@ -32,6 +32,7 @@ public function tampil_order(){
     $record = $this->order->count_all_where('TB_ORDER');
     $totalFiltered = $record;
     
+    
     if(empty($this->input->post('search')['value']))
     {            
         $posts = $this->order->get_alldata_where('TB_ORDER',$limit,$start);
@@ -92,7 +93,7 @@ public function approve_order(){
     $this->load->model('order');
     $myArray = $_REQUEST['idarray'];
     $length = count($myArray);
-    
+    $ok = 0;
     for ($i=0; $i <$length; $i++) { 
         
        $id = array('ID_ORDER'=> $myArray[$i]);
@@ -114,9 +115,9 @@ public function approve_order(){
             $simpan = $this->order->update('TB_ORDER', $id, $data);
             if ($simpan) {
                 $hasil = $this->permintaan->edit('TB_PERMINTAAN',$id_req, $data_req);
-                if ($hasil) {
-                   echo "success";
-                }
+               if ($hasil) {
+                  $ok= 1;
+               }
                }else{
                    echo "gagal simpan";
                }
@@ -128,6 +129,12 @@ public function approve_order(){
         }
       
     }
+    if ($ok == 1) {
+        echo "success";
+    }else{
+        echo "gagal";
+    }
+   
 }
 //=================proses approve=====================
 

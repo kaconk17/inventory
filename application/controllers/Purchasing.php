@@ -450,6 +450,29 @@ public function tampil_order(){
 
     echo json_encode($json_data); 
 }
-//===============end menampilkan barang===================
+//===============end menampilkan order===================
+
+//================cancel order===========================
+public function cancel_order(){
+    $this->load->model('order');
+
+    $data = array(
+        'ID_ORDER'=> $this->input->post('id')
+    );
+    $req = $this->order->select_data('TB_ORDER',$data);
+    foreach ($req as $key) {
+       $id_req = $key->ID_PERMINTAAN;
+    }
+    $hapus = $this->order->delete_order('TB_ORDER',$data);
+    if ($hapus) {
+        $val= array('STATUS_PERMINTAAN'=> null);
+      $update = $this->order->update('TB_PERMINTAAN',$id_req,$val);
+      if ($update) {
+         echo "success";
+      }else{echo "gagal update permintaan";}
+    }else{ echo "gagal hapus order";}
+}
+
+//================end cancel order===========================
 
 }

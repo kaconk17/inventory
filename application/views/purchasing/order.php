@@ -122,9 +122,28 @@ $("#btn-cancel").click(function(){
 			if (!data) {
 					alert('Select the data !');
 				}else{
+					if (data.STATUS_ORDER == 'approved') {
+						alert('Order tidak bisa cancel')
+					}else{
 					var r = confirm("Are you sure to delete "+data.NAMA_BARANG+" ?");
 					if (r == true) {
 					var id = 'id='+data.ID_ORDER;
+					$.ajax({
+						type: "POST",
+						url: 'cancel_order',
+						data: id,
+
+						success : function (response) {
+							if (response == 'success') {
+								alert('Cancel Order berhasil');
+									window.location = '';
+							}else{
+								alert(response);
+							}
+						}
+
+					});
+					}
 					}
 				}
 });
