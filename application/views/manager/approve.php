@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<?php $this->load->view('global/header'); ?>
+   <?php $this->load->view('global/header'); ?>
 </head>
 <body>
      <!-- WRAPPER -->
@@ -10,7 +10,7 @@
 <?php $this->load->view('global/navbar'); ?>
 		<!-- END NAVBAR -->
         <!-- LEFT SIDEBAR -->
-<?php $this->load->view('purchasing/_partials/sidebar'); ?>
+<?php $this->load->view('manager/_partials/sidebar'); ?>
 		<!-- END LEFT SIDEBAR -->
 		<!-- MAIN -->
 		<div class="main">
@@ -20,22 +20,19 @@
 					<!-- OVERVIEW -->
 					<div class="panel panel-headline">
 						<div class="panel-heading">
-							<h3 class="panel-title">Order</h3>
-							<p class="panel-subtitle">Daftar Order</p>
+							<h3 class="panel-title">Home</h3>
+							<p class="panel-subtitle">Manager</p>
 						</div>
 						<div class="panel-body">
 							<div class="row">
-								<div >
-									<button class="btn btn-warning btn-xs edit-modal" id="btn-cancel"><i class="fa fa-window-close"></i> Cancel Order</button>
-									
-								</div>
+								<button class="btn btn-success btn-xs edit-modal" id="btn-approve"><i class="fa fa-check"></i> Approve Order</button>
 							</div>
-							<div class="row">
-								<div class="table-responsive">
+                            <div class="row">
+                                <div class="table-responsive">
 									<table class="table table-striped table-bordered table-hover" id="table-order">
 									<thead>
 										<tr>
-											<th>Check</th>
+                                            <th><input name="select_all" value="1" id="select-all" type="checkbox" />All</th>
 											<th>ID</th>
 											<th>Tanggal Order</th>
 											<th>Nama Vendor</th>
@@ -51,8 +48,7 @@
 									</thead>
 									</table>
 								</div>
-							</div>
-							
+                            </div>
 						</div>
 					</div>
 					<!-- END OVERVIEW -->
@@ -80,7 +76,7 @@ var table_order = $('#table-order').DataTable({
                     "order" : [], //Initial no order.
                     // Load data for the table's content from an Ajax source
                     "ajax": {
-                        "url": '<?php echo base_url('purchasing/tampil_order'); ?>',
+                        "url": '<?php echo base_url('manager/tampil_order'); ?>',
                         "type": "POST"
                     },
 					columnDefs : [{
@@ -92,7 +88,7 @@ var table_order = $('#table-order').DataTable({
 					
 					}],
 					select: {
-            "style" :    'os',
+            "style" :    'multiple',
             "selector" : 'td:first-child'
         	},
                     //Set column definition initialisation properties.
@@ -114,19 +110,51 @@ var table_order = $('#table-order').DataTable({
 											
 });
 //====================end tampil order======================
+table_order.on("click", "th.select-checkbox", function() {
+    if ($("th.select-checkbox").hasClass("selected")) {
+        table_order.rows().deselect();
+        $("th.select-checkbox").removeClass("selected");
+    } else {
+        table_order.rows().select();
+        $("th.select-checkbox").addClass("selected");
+    }
+}).on("select deselect", function() {
+    ("Some selection or deselection going on")
+    if (table_order.rows({
+            selected: true
+        }).count() !== table_order.rows().count()) {
+        $("th.select-checkbox").removeClass("selected");
+    } else {
+        $("th.select-checkbox").addClass("selected");
+    }
+});
 
-$("#btn-cancel").click(function(){
-			var data = table_order
-					.row({ selected: true })
-					.data();
-			if (!data) {
-					alert('Select the data !');
-				}else{
-					var r = confirm("Are you sure to delete "+data.NAMA_BARANG+" ?");
-					if (r == true) {
-					var id = 'id='+data.ID_ORDER;
+$('#btn-approve').click(function(){
+	var data = table_order
+			.row({ selected: true })
+			.data();
+	if (!data) {
+			alert('Select the data !');
+		}else{
+			var ids = table_order.rows( { selected: true } ).data().pluck( 'ID_ORDER' ).toArray();
+			$.ajax({
+				type: "POST",
+				url: 'approve_order',
+				data: {idarray:ids},
+
+				success : function (response) {
+					if (response == 'success') {
+						alert('Proses Data berhasil');
+							window.location = '';
+					}else{
+						alert(response);
 					}
 				}
+
+			});
+			
+		}
 });
+
 });
 </script>

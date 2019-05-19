@@ -26,7 +26,7 @@
 						<div class="panel-body">
 							<div class="row">
 								<div >
-									<button class="btn btn-success btn-xs edit-modal" data-toggle="modal" data-target="#modal-user" data-id="ISBN564541"><i class="fa fa-plus"></i> Prosess Permintaan</button>
+									<button class="btn btn-primary btn-xs edit-modal" id="btn-proses"><i class="fa fa-refresh"></i> Prosess Permintaan</button>
 									
 								</div>
 							</div>
@@ -126,6 +126,33 @@ table_request.on("click", "th.select-checkbox", function() {
     } else {
         $("th.select-checkbox").addClass("selected");
     }
+});
+
+$('#btn-proses').click(function(){
+	var data = table_request
+			.row({ selected: true })
+			.data();
+	if (!data) {
+			alert('Select the data !');
+		}else{
+			var ids = table_request.rows( { selected: true } ).data().pluck( 'ID_PERMINTAAN' ).toArray();
+			$.ajax({
+				type: "POST",
+				url: 'proses_permintaan',
+				data: {idarray:ids},
+
+				success : function (response) {
+					if (response == 'success') {
+						alert('Proses Data berhasil');
+							window.location = '';
+					}else{
+						alert(response);
+					}
+				}
+
+			});
+			//console.log(ids);
+		}
 });
 });
 </script>

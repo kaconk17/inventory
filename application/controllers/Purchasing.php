@@ -294,19 +294,19 @@ public function tampil_permintaan(){
     $limit = $this->input->post('length');
     $start = $this->input->post('start');
     
-    $record = $this->permintaan->count_all('TB_PERMINTAAN');
+    $record = $this->permintaan->count_all_where('TB_PERMINTAAN');
     $totalFiltered = $record;
     
     if(empty($this->input->post('search')['value']))
     {            
-        $posts = $this->permintaan->get_alldata('TB_PERMINTAAN',$limit,$start);
+        $posts = $this->permintaan->get_data_where('TB_PERMINTAAN',$limit,$start);
     }
     else {
         $search = $this->input->post('search')['value']; 
 
-        $posts =  $this->permintaan->search_alldata('TB_PERMINTAAN',$limit,$start,$search);
+        $posts =  $this->permintaan->search_alldata_where('TB_PERMINTAAN',$limit,$start,$search);
 
-        $totalFiltered = $this->permintaan->count_search('TB_PERMINTAAN',$search);
+        $totalFiltered = $this->permintaan->count_search_where('TB_PERMINTAAN',$search);
     }
     $no = $start;
     $data = array();
@@ -346,5 +346,110 @@ public function tampil_permintaan(){
 
     echo json_encode($json_data); 
 }
+
+public function proses_permintaan(){
+    $this->load->model('permintaan');
+    $this->load->model('order');
+    $myArray = $_REQUEST['idarray'];
+    $length = count($myArray);
+    
+    for ($i=0; $i <$length; $i++) { 
+        
+       $id = array('ID_PERMINTAAN'=> $myArray[$i]);
+        $data = array(
+            'STATUS_PERMINTAAN'=> 'proccessed'
+        );
+
+        
+        $req = $this->permintaan->get_selected('TB_PERMINTAAN',$id,1);
+        if ($req) {
+           foreach ($req as $key) {
+            $data_req = array(
+                'ID_PERMINTAAN'=> $key->ID_PERMINTAAN,
+                'HARGA_TOTAL'=> $key->HARGA_BARANG * $key->QTY_BARANG,
+                'TANGGAL_ORDER'=> date('Y-m-d')
+            );
+            $simpan = $this->order->simpan('TB_ORDER', $data_req);
+            if ($simpan) {
+                $hasil = $this->permintaan->edit('TB_PERMINTAAN',$id, $data);
+                if ($hasil) {
+                   echo "success";
+                }
+               }else{
+                   echo "gagal simpan";
+               }
+           }
+          
+         
+        }else{
+            echo "permintaan tidak ada";
+        }
+      
+    }
+   
+}
+//============menampilkan order===============
+public function tampil_order(){
+    $this->load->model('order');
+
+    $limit = $this->input->post('length');
+    $start = $this->input->post('start');
+    
+    $record = $this->order->count_all('TB_ORDER');
+    $totalFiltered = $record;
+    
+    if(empty($this->input->post('search')['value']))
+    {            
+        $posts = $this->order->get_alldata('TB_ORDER',$limit,$start);
+    }
+    else {
+        $search = $this->input->post('search')['value']; 
+
+        $posts =  $this->order->search_alldata('TB_ORDER',$limit,$start,$search);
+
+        $totalFiltered = $this->oerder->count_search('TB_ORDER',$search);
+    }
+    $no = $start;
+    $data = array();
+    if(!empty($posts))
+    {
+        
+            foreach ($posts as $post)
+        {
+            $no++;
+
+            
+            $nestedData['no'] = "";
+            $nestedData['ID_ORDER'] = $post->ID_ORDER;
+            $nestedData['TANGGAL_ORDER'] = $post->TANGGAL_ORDER;
+            $nestedData['NAMA_VENDOR'] = $post->NAMA_VENDOR;
+            $nestedData['NAMA_BARANG'] = $post->NAMA_BARANG;
+            $nestedData['QTY_BARANG'] = $post->QTY_BARANG;
+            $nestedData['SATUAN'] = $post->SATUAN;
+            $nestedData['HARGA_BARANG'] = $post->HARGA_BARANG;
+            $nestedData['HARGA_TOTAL'] = $post->HARGA_TOTAL;
+            $nestedData['CURRENCY'] = $post->CURRENCY;
+            $nestedData['TANGGAL_KIRIM'] = $post->TANGGAL_KIRIM;
+            $nestedData['STATUS_ORDER'] = $post->STATUS_ORDER;
+            
+            
+            
+            $data[] = $nestedData;
+
+        } 
+        
+        
+    }
+
+    $json_data = array(
+        'draw'            => intval($this->input->post('draw')),  
+        'recordsTotal'    => intval($record),  
+        'recordsFiltered' => intval($totalFiltered), 
+        'data'            => $data   
+        );
+
+    echo json_encode($json_data); 
+}
+//===============end menampilkan barang===================
 
 }

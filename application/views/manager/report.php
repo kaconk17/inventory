@@ -20,7 +20,7 @@
 					<!-- OVERVIEW -->
 					<div class="panel panel-headline">
 						<div class="panel-heading">
-							<h3 class="panel-title">Home</h3>
+							<h3 class="panel-title">Report</h3>
 							<p class="panel-subtitle">Manager</p>
 						</div>
 						<div class="panel-body">
@@ -45,6 +45,3 @@
 <?php $this->load->view('global/js'); ?>
 </body>
 </html>
-
-
-
