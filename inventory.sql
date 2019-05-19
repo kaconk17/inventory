@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: May 18, 2019 at 04:00 PM
+-- Generation Time: May 19, 2019 at 07:20 AM
 -- Server version: 5.6.38
 -- PHP Version: 7.2.1
 
@@ -49,8 +49,17 @@ CREATE TABLE `TB_ORDER` (
   `ID_PERMINTAAN` int(20) NOT NULL,
   `HARGA_TOTAL` decimal(8,2) NOT NULL,
   `APPROVAL` varchar(10) NOT NULL,
-  `STATUS_ORDER` varchar(20) NOT NULL
+  `STATUS_ORDER` varchar(20) DEFAULT NULL,
+  `TANGGAL_ORDER` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `TB_ORDER`
+--
+
+INSERT INTO `TB_ORDER` (`ID_ORDER`, `ID_PERMINTAAN`, `HARGA_TOTAL`, `APPROVAL`, `STATUS_ORDER`, `TANGGAL_ORDER`) VALUES
+(1, 3, '250000.00', '', NULL, '2019-05-19'),
+(2, 4, '100000.00', '', 'approved', '2019-05-19');
 
 -- --------------------------------------------------------
 
@@ -64,7 +73,7 @@ CREATE TABLE `TB_PERMINTAAN` (
   `ID_BARANG` int(20) NOT NULL,
   `QTY_BARANG` decimal(10,0) NOT NULL,
   `TANGGAL_KIRIM` date NOT NULL,
-  `STATUS_PERMINTAAN` varchar(20) NOT NULL
+  `STATUS_PERMINTAAN` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -72,8 +81,9 @@ CREATE TABLE `TB_PERMINTAAN` (
 --
 
 INSERT INTO `TB_PERMINTAAN` (`ID_PERMINTAAN`, `TANGGAL_PERMINTAAN`, `ID_BARANG`, `QTY_BARANG`, `TANGGAL_KIRIM`, `STATUS_PERMINTAAN`) VALUES
-(1, '2019-05-18', 3, '5', '2019-05-27', ''),
-(3, '2019-05-18', 1, '10', '2019-05-25', '');
+(1, '2019-05-18', 3, '5', '2019-05-27', NULL),
+(3, '2019-05-18', 1, '10', '2019-05-25', 'proccessed'),
+(4, '2019-05-19', 3, '2', '2019-05-28', 'ordered');
 
 -- --------------------------------------------------------
 
@@ -172,13 +182,13 @@ ALTER TABLE `TB_BARANG`
 -- AUTO_INCREMENT for table `TB_ORDER`
 --
 ALTER TABLE `TB_ORDER`
-  MODIFY `ID_ORDER` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_ORDER` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `TB_PERMINTAAN`
 --
 ALTER TABLE `TB_PERMINTAAN`
-  MODIFY `ID_PERMINTAAN` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID_PERMINTAAN` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `TB_USER`
