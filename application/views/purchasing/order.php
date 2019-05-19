@@ -122,7 +122,7 @@ $("#btn-cancel").click(function(){
 			if (!data) {
 					alert('Select the data !');
 				}else{
-					if (data.STATUS_ORDER == 'approved') {
+					if (data.STATUS_ORDER == 'approved'||data.STATUS_ORDER == 'completed') {
 						alert('Order tidak bisa cancel')
 					}else{
 					var r = confirm("Are you sure to delete "+data.NAMA_BARANG+" ?");

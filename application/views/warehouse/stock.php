@@ -26,56 +26,32 @@
 						<div class="panel-body">
 							<div class="row">
 							
+							</div>
 							<div class="row">
-								
-								<div class="col-md-3">
-									
-									
-									
+								<div class="table-responsive">
+									<table class="table table-striped table-bordered table-hover" id="table-stock">
+									<thead>
+										<tr>
+											<th>Check</th>
+											<th>ID</th>
+											<th>ID Barang</th>											
+											<th>Nama Barang</th>
+											<th>Qty Stock</th>
+											<th>Satuan</th>
+											<th>Min Stock</th>
+											<th>Status Stock</th>
+											
+										</tr>
+									</thead>
+									</table>
 								</div>
 							</div>
 						</div>
 					</div>
 					<!-- END OVERVIEW -->
-					<div class="row">
-						<div class="col-md-6">
-							<!-- RECENT PURCHASES -->
-							
-							<!-- END RECENT PURCHASES -->
-						</div>
-						<div class="col-md-6">
-							<!-- MULTI CHARTS -->
-							
-							<!-- END MULTI CHARTS -->
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-7">
-							<!-- TODO LIST -->
-							
-							<!-- END TODO LIST -->
-						</div>
-						<div class="col-md-5">
-							<!-- TIMELINE -->
-							
-							<!-- END TIMELINE -->
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-4">
-							<!-- TASKS -->
-							
-							<!-- END TASKS -->
-						</div>
-						<div class="col-md-4">
-							
-						</div>
-						<div class="col-md-4">
-							<!-- REALTIME CHART -->
-							
-							<!-- END REALTIME CHART -->
-						</div>
-					</div>
+					
+					
+					
 				</div>
 			</div>
 			<!-- END MAIN CONTENT -->
@@ -88,6 +64,47 @@
 <?php $this->load->view('global/js'); ?>
 </body>
 </html>
+<script type="text/javascript">
+$(document).ready(function(){
+	//====================tampil order======================
+var table_stock = $('#table-stock').DataTable({ 
+                    "processing": true, //Feature control the processing indicator.
+                    "serverSide": true, //Feature control DataTables' server-side processing mode.
+                    "order" : [], //Initial no order.
+                    // Load data for the table's content from an Ajax source
+                    "ajax": {
+                        "url": '<?php echo base_url('warehouse/tampil_stock'); ?>',
+                        "type": "POST"
+                    },
+					columnDefs : [{
+						"orderable" : false,
+						"data" : null,
+    				"defaultContent" : '',
+						"className" : 'select-checkbox',
+            "targets" :   0,
+					
+					}],
+					select: {
+            "style" :    'os',
+            "selector" : 'td:first-child'
+        	},
+                    //Set column definition initialisation properties.
+            "columns": [
+											
+						{"data": "no"},
+						{"data": "ID_STOCK"},
+						{"data": "ID_BARANG"},
+						{"data": "NAMA_BARANG"},
+						{"data": "QTY_STOCK"},
+						{"data": "SATUAN"},
+						{"data": "MIN_STOCK"},
+						{"data": "STATUS_STOCK"},
+                    ]
+											
+});
+//====================end tampil order======================
+});
+</script>
 
 
 

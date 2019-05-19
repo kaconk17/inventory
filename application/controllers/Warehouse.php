@@ -317,12 +317,13 @@ public function tampil_incoming(){
 
     echo json_encode($json_data); 
 }
-//===============end menampilkan order===================
+//===============end menampilkan incoming===================
 
 //================simpan incoming=======================
 public function simpan_incoming(){
     $this->load->model('incoming');
     $this->load->model('order');
+    $this->load->model('stock');
 
     $id_order= $this->input->post('id');
     $qty_masuk =$this->input->post('qty');
@@ -334,8 +335,8 @@ public function simpan_incoming(){
     foreach ($order as $key) {
        $id_barang = array('ID_BARANG'=>$key->ID_BARANG);
        $id_permintaan= array('ID_PERMINTAAN'=>$key->ID_PERMINTAAN);
-    }
-    $data_order = array('STATUS_ORDER'=>'completed');
+
+       $data_order = array('STATUS_ORDER'=>'completed');
     $data_permintaan = array('STATUS_PERMINTAAN'=>'completed');
 
     $stock = $this->order->select_data('TB_STOCK',$id_barang);
@@ -350,21 +351,23 @@ public function simpan_incoming(){
             'QTY_STOCK' => $qty_masuk,
             'STAFF_GUDANG' => $this->session->userdata('nama')
         );
-
         $data_stock = array(
-            'ID_BARANG'=> $id_barang,
-            'END_STOCK'=> $qty_masuk
+            'ID_BARANG'=> $key->ID_BARANG,
+            'END_STOCK'=> $this->input->post('qty')
         );
-        //echo "belum stock".$id_order;
+       
+       
+       //echo $id_barang;
         $simpan = $this->incoming->simpan('TB_PENERIMAAN', $data);
+       
         if ($simpan) {
-            $in = $this->incoming->simpan('TB_STOCK', $data_stock);
-            $set = $this->order->update('TB_ORDER',$id_order, $data_order);
+            $in = $this->stock->create('TB_STOCK', $data_stock);
+            $set = $this->order->update('TB_ORDER',array('ID_ORDER'=>$id_order), $data_order);
             $z =$this->order->update('TB_PERMINTAAN',$id_permintaan, $data_permintaan);
             echo "success";
         }else{
             echo "gagal simpan";
-        }
+       }
     }else{
         foreach ($stock as $j) {
            $qty_awal = $j->END_STOCK;
@@ -388,7 +391,7 @@ public function simpan_incoming(){
         $simpan = $this->incoming->simpan('TB_PENERIMAAN', $data);
         if ($simpan) {
            $tambah = $this->incoming->update('TB_STOCK',$id_barang, $data_stock);
-           $set = $this->order->update('TB_ORDER',$id_order, $data_order);
+           $set = $this->order->update('TB_ORDER',array('ID_ORDER'=>$id_order), $data_order);
             $z =$this->order->update('TB_PERMINTAAN',$id_permintaan, $data_permintaan);
           echo "success";
            
@@ -396,11 +399,65 @@ public function simpan_incoming(){
             echo "gagal simpan";
         }
     }
-    
-
-   
-
+    }
 }
 //================ end simpan incoming=======================
+
+//============menampilkan stock===============
+public function tampil_stock(){
+    $this->load->model('stock');
+
+    $limit = $this->input->post('length');
+    $start = $this->input->post('start');
+    
+    $record = $this->stock->count_all('TB_STOCK');
+    $totalFiltered = $record;
+    
+    if(empty($this->input->post('search')['value']))
+    {            
+        $posts = $this->stock->get_alldata('TB_STOCK',$limit,$start);
+    }
+    else {
+        $search = $this->input->post('search')['value']; 
+
+        $posts =  $this->stock->search_alldata('TB_STOCK',$limit,$start,$search);
+
+        $totalFiltered = $this->stock->count_search('TB_STOCK',$search);
+    }
+    $no = $start;
+    $data = array();
+    if(!empty($posts))
+    {
+        
+            foreach ($posts as $post)
+        {
+            $no++;
+
+            
+            $nestedData['no'] = "";
+            $nestedData['ID_STOCK'] = $post->ID_STOCK;
+            $nestedData['ID_BARANG'] = $post->ID_BARANG;           
+            $nestedData['NAMA_BARANG'] = $post->NAMA_BARANG;          
+            $nestedData['QTY_STOCK'] = $post->QTY_STOCK;
+            $nestedData['SATUAN'] = $post->SATUAN;
+            $nestedData['MIN_STOCK'] = $post->MIN_STOCK;
+            $nestedData['STATUS_STOCK'] = $post->STATUS_STOCK;
+            $data[] = $nestedData;
+
+        } 
+        
+        
+    }
+
+    $json_data = array(
+        'draw'            => intval($this->input->post('draw')),  
+        'recordsTotal'    => intval($record),  
+        'recordsFiltered' => intval($totalFiltered), 
+        'data'            => $data   
+        );
+
+    echo json_encode($json_data); 
+}
+//===============end menampilkan order===================
 
 }
