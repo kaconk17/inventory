@@ -29,6 +29,10 @@ class Warehouse extends CI_Controller {
     public function report(){
         $this->load->view('warehouse/report');
     }
+
+    public function out(){
+        $this->load->view('warehouse/out');
+    }
 //=============menampilkan daftar barang============
     public function tampil_barang(){
         $this->load->model('barang');
@@ -438,7 +442,7 @@ public function tampil_stock(){
             $nestedData['ID_STOCK'] = $post->ID_STOCK;
             $nestedData['ID_BARANG'] = $post->ID_BARANG;           
             $nestedData['NAMA_BARANG'] = $post->NAMA_BARANG;          
-            $nestedData['QTY_STOCK'] = $post->QTY_STOCK;
+            $nestedData['QTY_STOCK'] = $post->END_STOCK;
             $nestedData['SATUAN'] = $post->SATUAN;
             $nestedData['MIN_STOCK'] = $post->MIN_STOCK;
             $nestedData['STATUS_STOCK'] = $post->STATUS_STOCK;
@@ -459,5 +463,17 @@ public function tampil_stock(){
     echo json_encode($json_data); 
 }
 //===============end menampilkan order===================
+
+//================pengeluaran barang====================
+public function pengeluaran(){
+    $this->load->model('stock');
+
+    $id = $this->input->post('id');
+    $qty = $this->input->post('qty');
+
+    
+
+}
+//=================end pengeluaran barang===============
 
 }
