@@ -172,7 +172,7 @@ $('#btn-save').click(function(){
 		$.ajax({
 				type: "POST",
 				url: 'pengeluaran',
-				data: 'id='+data.ID_BARANG+'&qty='+qty,
+				data: 'id='+data.ID_STOCK+'&qty='+qty,
 
 				success : function (response) {
 					if (response == 'success') {

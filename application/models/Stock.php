@@ -46,4 +46,25 @@ class Stock extends CI_Model{
         $query = $this->db->get();
         return $query->num_rows();
     }
+
+    public function update($table, $id, $data){
+        $exe = $this->db->set($data);
+        $this->db->where($id);
+        $this->db->update($table);
+        return $exe;
+    }
+
+    public function get_alldata_where($table,$id,$perpage,$offset){
+       
+        if ($perpage != -1) {
+            $this->db->select('*');
+            $this->db->from($table);
+            $this->db->join('TB_BARANG','TB_BARANG.ID_BARANG = TB_STOCK.ID_BARANG');
+            $this->db->where($id);
+            $this->db->limit($perpage,$offset);
+        $result = $this->db->get()->result();
+        return $result;
+        }
+        
+    }
 }

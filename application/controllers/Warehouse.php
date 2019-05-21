@@ -471,7 +471,38 @@ public function pengeluaran(){
     $id = $this->input->post('id');
     $qty = $this->input->post('qty');
 
-    
+    $id_stock = array('TB_STOCK.ID_STOCK'=>$id);
+    $beg_stock=0;
+    $satuan=0;
+    $stock = $this->stock->get_alldata_where('TB_STOCK',$id_stock,1,0);
+    foreach ($stock as $key) {
+
+       $beg_stock = $key->END_STOCK;
+       $satuan = $key->SATUAN;
+       $id_barang= $key->ID_BARANG;
+    }
+
+    $update = array(
+        'END_STOCK' => $beg_stock - $qty
+    );
+
+    $data = array(
+        'TANGGAL_KELUAR'=> date('Y-m-d'),
+        'ID_BARANG'=> $id_barang,
+        'BEG_QTY'=> $beg_stock,
+        'QTY_KELUAR'=> $qty,
+        'END_QTY'=> ($beg_stock - $qty),
+        'SATUAN'=> $satuan,
+        'STAFF_GUDANG'=> $this->session->userdata('nama')
+    );
+
+    $kurang = $this->stock->update('TB_STOCK',$id_stock,$update);
+    if ($kurang) {
+        $out = $this->stock->create('TB_PENGELUARAN', $data);
+        echo "success";
+    }else{
+        echo "gagal simpan";
+    }
 
 }
 //=================end pengeluaran barang===============

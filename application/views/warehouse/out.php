@@ -34,12 +34,14 @@
 										<tr>
 											<th>Check</th>
 											<th>ID</th>
+											<th>Tanggal Keluar</th>
 											<th>ID Barang</th>											
 											<th>Nama Barang</th>
 											<th>Qty Stock</th>
+											<th>Qty Keluar</th>
+											<th>End Stock</th>
 											<th>Satuan</th>
-											<th>Min Stock</th>
-											<th>Status Stock</th>
+											<th>Staff Gudang</th>
 											
 										</tr>
 									</thead>
