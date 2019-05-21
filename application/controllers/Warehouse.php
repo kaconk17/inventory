@@ -507,4 +507,64 @@ public function pengeluaran(){
 }
 //=================end pengeluaran barang===============
 
+//============menampilkan out===============
+public function tampil_out(){
+    $this->load->model('stock');
+
+    $limit = $this->input->post('length');
+    $start = $this->input->post('start');
+    
+    $record = $this->stock->count_all('TB_PENGELUARAN');
+    $totalFiltered = $record;
+    
+    if(empty($this->input->post('search')['value']))
+    {            
+        $posts = $this->stock->get_alldata_out('TB_PENGELUARAN',$limit,$start);
+    }
+    else {
+        $search = $this->input->post('search')['value']; 
+
+        $posts =  $this->stock->search_alldata_out('TB_PENGELUARAN',$limit,$start,$search);
+
+        $totalFiltered = $this->stock->count_search_out('TB_PENGELUARAN',$search);
+    }
+    $no = $start;
+    $data = array();
+    if(!empty($posts))
+    {
+        
+            foreach ($posts as $post)
+        {
+            $no++;
+
+            
+            $nestedData['no'] = "";
+            $nestedData['ID_PENGELUARAN'] = $post->ID_PENGELUARAN;
+            $nestedData['TANGGAL_KELUAR'] = $post->TANGGAL_KELUAR;
+            $nestedData['ID_BARANG'] = $post->ID_BARANG;
+            $nestedData['NAMA_BARANG'] = $post->NAMA_BARANG;
+            $nestedData['QTY_AWAL'] = $post->BEG_QTY;
+            $nestedData['QTY_OUT'] = $post->QTY_KELUAR;
+            $nestedData['END_QTY'] = $post->END_QTY;
+            $nestedData['SATUAN'] = $post->SATUAN;
+            $nestedData['STAFF_GUDANG'] = $post->STAFF_GUDANG;
+            
+            $data[] = $nestedData;
+
+        } 
+        
+        
+    }
+
+    $json_data = array(
+        'draw'            => intval($this->input->post('draw')),  
+        'recordsTotal'    => intval($record),  
+        'recordsFiltered' => intval($totalFiltered), 
+        'data'            => $data   
+        );
+
+    echo json_encode($json_data); 
+}
+//===============end menampilkan out===================
+
 }
