@@ -27,7 +27,7 @@
 							<div class="row">
 								<div >
 									<button class="btn btn-warning btn-xs edit-modal" id="btn-cancel"><i class="fa fa-window-close"></i> Cancel Order</button>
-									
+									<button class="btn btn-primary btn-xs" id="btn-cetak"><i class="fa fa-print"></i> Cetak Order</button>
 								</div>
 							</div>
 							<div class="row">
@@ -146,6 +146,21 @@ $("#btn-cancel").click(function(){
 					}
 					}
 				}
+});
+
+$('#btn-cetak').click(function(){
+	var data = table_order
+					.row({ selected: true })
+					.data();
+	if (!data) {
+		alert('Select the data !');
+	}else{
+		if (data.STATUS_ORDER == 'approve'||data.STATUS_ORDER == 'completed') {
+			var id = data.ID_ORDER;
+			window.location = 'cetak_pdf?id='+id;
+		}
+	}
+	
 });
 });
 </script>
